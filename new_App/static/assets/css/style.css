@@ -1,0 +1,89 @@
+/* static/your_app_name/css/custom.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Light gray background */
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+h1 {
+    color: #333;
+}
+
+.navbar {
+    background-color: rgb(177, 30, 177);
+    color: #ffffff;
+}
+
+/* static/your_app_name/css/custom.css */
+
+/* Navbar links initial style */
+.navbar-dark .navbar-nav .nav-link {
+    color: #ffffff; /* White text color */
+    font-weight: normal; /* Normal font weight */
+    border-radius: 5px; /* Rounded corners */
+    transition: all 0.3s ease; /* Smooth animation */
+}
+
+/* Navbar links hover style */
+.navbar-dark .navbar-nav .nav-link:hover {
+    font-weight: bold; /* Bold font weight on hover */
+    background-color: rgba(255, 255, 255, 0.1); /* Light background color on hover */
+    border: 2px solid #ffffff; /* White border */
+    padding: 8px 15px; /* Padding inside the link */
+    border-radius: 8px; /* Rounded corners */
+    color:white;
+}
+
+.active {
+    font-weight: bold; /* Example: Bold font weight for active link */
+    background-color: black; /* Example: White background for active link */
+    color: white; /* Example: Dark text color for active link */
+    border-radius: 5px; /* Example: Rounded corners */
+} 
+
+/* Main content wrapper */
+.main-content {
+    flex: 1; /* This pushes the footer to the bottom */
+}
+
+/* Login Page CSS */
+.login-container {
+    flex: 1; /* Pushes footer to bottom */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.login-form {
+    max-width: 400px;
+    width: 100%;
+    padding: 30px;
+    background-color: #ffffff; /* White background */
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+.login-form h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Login Page CSS End */
+
+/* Footer styles */
+.footer {
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+
+.container-flex {
+    flex: 1 0 auto;
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 20px 0; /* Add padding for better spacing */
+}
