@@ -1,8 +1,45 @@
 {% extends 'base.html' %}
-{% load static%}
+
 {% block title %}About Us{% endblock %}
 
 {% block content %}
-    <h1>Welcome to My Website</h1>
-    <p>This is the About Us page.</p>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12 text-center mb-4">
+            <h1 class="display-4 text-white">About Us</h1>
+            <p class="lead text-white">At our core, we prioritize pushing boundaries, embracing the unknown, and fostering a culture of continuous learning.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card card-about border-0 shadow-lg h-100">
+                <div class="card-body card-about-body">
+                    <h2 class="card-title text-center">Our Vision</h2>
+                    <p class="card-text">Our vision is to create a better world where everyone has access to the resources they need to thrive.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card border-0 shadow-lg h-100">
+                <div class="card-body">
+                    <h2 class="card-title text-center">Our Mission</h2>
+                    <p class="card-text">Our mission is to empower individuals through education, support, and community-driven initiatives.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card border-0 shadow-lg h-100">
+                <div class="card-body">
+                    <h2 class="card-title text-center">About Us</h2>
+                    <p class="card-text">
+                        FGEN (Future Generation) is dedicated to enlightening the next generation about the marvels of the human brain. Our mission is to cultivate a deep understanding and appreciation of neuroscience among young minds, empowering them to become informed, compassionate leaders. By providing accessible education, fostering curiosity, and promoting awareness, we aim to inspire future generations to leverage their knowledge of the brain to innovate, lead with empathy, and create a brighter, more informed world. Through FGEN, we are committed to nurturing a community where the study of the brain ignites a passion for lifelong learning and leadership.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

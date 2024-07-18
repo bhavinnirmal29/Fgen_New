@@ -1,5 +1,9 @@
-from django.shortcuts import render
+from contextlib import redirect_stdout
+from django.shortcuts import render,redirect
 from .forms import ContactForm
+from .forms import RegistrationForm
+
+
 def home(request):
     return render(request, 'home.html', {'active_page': 'home'})
 
@@ -11,12 +15,11 @@ def contact_us(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
-            return render('contact_success.html')
+            return redirect('contact_success')
     else:
         form = ContactForm()
-        return render(request, 'contactus.html', {'active_page': 'contact'})
     
-    
+    return render(request, 'contactus.html', {'form': form, 'active_page': 'contact'})
 
 def contact_success(request):
     return render(request, 'contact_success.html')
@@ -35,7 +38,15 @@ def login_view(request):
     return render(request, 'login.html', {'active_page': 'login'})
 
 def register_view(request):
-    return render(request, 'register.html', {'active_page': 'register'})
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')  # Redirect to login page after successful registration
+    else:
+        form = RegistrationForm()
+    
+    return render(request, 'register.html', {'form': form, 'active_page': 'register'})
 
 def resources_view(request):
     return render(request, 'resources.html', {'active_page': 'resources'})

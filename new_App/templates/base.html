@@ -9,12 +9,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <style>
- 
+        body {
+            padding-bottom: 100px; /* Adjust this value based on your footer height */
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 100px; /* Adjust height as necessary */
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding-top: 20px; /* Padding for content inside footer */
+        }
     </style>
 </head>
 <body>
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-purple">
+    <nav class="navbar navbar-expand-lg navbar-fixed-top navbar-dark bg-purple">
         <a class="navbar-brand" href="{% url 'home' %}" style="font-size:22px;">FGEN</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -71,6 +83,7 @@
     </nav>
     
     <!-- Main Content -->
+    <div class="star-background"></div>
     <div class="container main-content">
         {% block content %}
         {% endblock %}
@@ -80,9 +93,9 @@
     <footer class="footer">
         <div class="container text-center">
             <div class="social-icons mb-3">
-                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
-                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram" style="font-size:28px;"></i></a>&nbsp;&nbsp;
+                <a href="#" class="social-icon"><i class="fab fa-facebook" style="font-size:28px;"></i></a>&nbsp;&nbsp;
+                <a href="#" class="social-icon"><i class="fab fa-twitter" style="font-size:28px;"></i></a>&nbsp;&nbsp;
             </div>
             <p>&copy; {% now "Y" %} Your Company. All rights reserved.</p>
         </div>
@@ -92,6 +105,22 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+    <script src="{% static 'assets/js/star.js' %}"></script>
+    {% comment %} <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const starBackground = document.querySelector('.star-background');
+            const numStars = 100;
+        
+            for (let i = 0; i < numStars; i++) {
+                let star = document.createElement('div');
+                star.className = 'star';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starBackground.appendChild(star);
+            }
+        });
+        
+    </script> {% endcomment %}
 </body>
 </html>

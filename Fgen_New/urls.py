@@ -24,7 +24,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', views.home, name='home'),
     path('about/', views.about_us, name='about_us'),
-    path('contact/', views.contact_us, name='contact_us'),
     path('programs/', views.programs, name='programs'),
     path('involved/', views.get_involved, name='get_involved'),
     path('events/', views.events, name='events'),
@@ -32,5 +31,6 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('register/', views.register_view, name='register'),
     path('resources/', views.resources_view, name='resources'),
+    path('contact_us/', views.contact_us, name='contact_us'),
     path('contact_success/', views.contact_success, name='contact_success'),
 ]
