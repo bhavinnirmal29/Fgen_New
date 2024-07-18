@@ -102,8 +102,8 @@ h1 {
 
 .star-background .star {
     position: absolute;
-    width: 10px;
-    height: 10px;
+    width: 3px;
+    height: 3px;
     background: white;
     animation: twinkling 2s infinite ease-in-out;
 }
