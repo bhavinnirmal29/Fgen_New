@@ -10,13 +10,13 @@
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <style>
         body {
-            padding-bottom: 100px; /* Adjust this value based on your footer height */
+            padding-bottom: 130px; /* Adjust this value based on your footer height */
         }
         .footer {
             position: fixed;
             bottom: 0;
             width: 100%;
-            height: 100px; /* Adjust height as necessary */
+            height: 120px; /* Adjust height as necessary */
             background-color: #333;
             color: white;
             text-align: center;
@@ -97,6 +97,7 @@
                 <a href="#" class="social-icon"><i class="fab fa-facebook" style="font-size:28px;"></i></a>&nbsp;&nbsp;
                 <a href="#" class="social-icon"><i class="fab fa-twitter" style="font-size:28px;"></i></a>&nbsp;&nbsp;
             </div>
+
             <p>&copy; {% now "Y" %} Your Company. All rights reserved.</p>
         </div>
     </footer>
@@ -106,21 +107,5 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="{% static 'assets/js/star.js' %}"></script>
-    {% comment %} <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const starBackground = document.querySelector('.star-background');
-            const numStars = 100;
-        
-            for (let i = 0; i < numStars; i++) {
-                let star = document.createElement('div');
-                star.className = 'star';
-                star.style.top = Math.random() * 100 + 'vh';
-                star.style.left = Math.random() * 100 + 'vw';
-                star.style.animationDelay = Math.random() * 2 + 's';
-                starBackground.appendChild(star);
-            }
-        });
-        
-    </script> {% endcomment %}
 </body>
 </html>

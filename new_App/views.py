@@ -2,13 +2,15 @@ from contextlib import redirect_stdout
 from django.shortcuts import render,redirect
 from .forms import ContactForm
 from .forms import RegistrationForm
+from .models import Programs, Leadership
 
 
 def home(request):
     return render(request, 'home.html', {'active_page': 'home'})
 
 def about_us(request):
-    return render(request, 'aboutus.html', {'active_page': 'about'})
+    leadership = Leadership.objects.all()
+    return render(request, 'aboutus.html', {'active_page': 'about', 'leadership':leadership})
 
 def contact_us(request):
     if request.method == 'POST':
@@ -26,7 +28,8 @@ def contact_success(request):
     
 
 def programs(request):
-    return render(request, 'programs.html', {'active_page': 'programs'})
+    programs = Programs.objects.all()
+    return render(request, 'programs.html', {'active_page': 'programs', 'programs':programs})
 
 def get_involved(request):
     return render(request, 'getinvolved.html', {'active_page': 'getinvolved'})

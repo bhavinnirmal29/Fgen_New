@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.urls import path
+from django.urls import include, path
 
 from new_App import views
 
@@ -33,4 +33,5 @@ urlpatterns = [
     path('resources/', views.resources_view, name='resources'),
     path('contact_us/', views.contact_us, name='contact_us'),
     path('contact_success/', views.contact_success, name='contact_success'),
+    path('admin/', admin.site.urls),
 ]

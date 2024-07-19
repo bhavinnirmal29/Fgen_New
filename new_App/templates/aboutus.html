@@ -3,7 +3,67 @@
 {% block title %}About Us{% endblock %}
 
 {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .jumbotron-custom {
+            background: linear-gradient(to right, #fddb3a, #f7c600);
+            color: white;
+            padding: 2rem 1rem;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+        .jumbotron-custom h1 {
+            font-size: 2.5rem;
+        }
+        .jumbotron-custom p {
+            font-size: 1.25rem;
+        }
+        .jumbotron-custom:hover {
+            transform: scale(1.05);
+        }
+        {% comment %}
+        Impact, Success Stories, case studies
+        {% endcomment %}
 
+        .impact-section {
+            background: #f7f7f7;
+            padding: 50px 0;
+        }
+        .impact-item {
+            margin: 20px 0;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .impact-item:hover {
+            transform: translateY(-10px);
+        }
+        .impact-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2575fc;
+        }
+        .impact-description {
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+    </style>
+</head>
 <div class="container mt-5">
     <div class="row">
         <div class="col-12 text-center mb-4">
@@ -30,7 +90,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12 mb-4">
+        <div class="col-sm-12 mt-4 mb-4">
             <div class="card card-about border-0 shadow-lg h-100">
                 <div class="card-body card-about-body">
                     <h2 class="card-title text-center">About Us</h2>
@@ -42,4 +102,54 @@
         </div>
     </div>
 </div>
+<div class="container-fluid mt-2">
+    <div class="jumbotron jumbotron-custom text-center">
+        <h2 class="display-6">Leadership Team</h2>
+    </div>
+    <div class="row">
+        <div class="row justify-content-center">
+            {% for l in leadership %}
+            <div class="col-md-4 col-sm-12">
+                <div class="card card-custom program-card shadow-lg">
+                    <img src="/static/assets/images/{{l.l_imagename}}.jpg" height=300 width=250 class="card-img-top" alt="Card Image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{l.l_name}}</h5>
+                        <p class="card-text">{{l.l_description}}</p>
+                    </div>
+                </div>
+                &nbsp;
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% comment %} <div class="container impact-section">
+    <div class="row">
+        <div class="col-12 text-center mb-4">
+            <h2>FGEN's Impact</h2>
+            <p>Statistics, success stories, and case studies demonstrating FGEN’s impact</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="impact-item fade-in">
+                <div class="impact-number">500+</div>
+                <div class="impact-description">Success Stories</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="impact-item fade-in" style="animation-delay: 0.3s;">
+                <div class="impact-number">200</div>
+                <div class="impact-description">Case Studies</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="impact-item fade-in" style="animation-delay: 0.6s;">
+                <div class="impact-number">1000+</div>
+                <div class="impact-description">Satisfied Clients</div>
+            </div>
+        </div>
+    </div>
+</div> {% endcomment %}
 {% endblock %}

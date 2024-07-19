@@ -3,6 +3,21 @@
 {% block title %}Programs {% endblock %}
 
 {% block content %}
-    <h1>Welcome to My Website</h1>
-    <p>This is the Programs page.</p>
+    <div class="container-fluid mt-5">
+        <div class="row justify-content-center">
+            {% for program in programs %}
+            <div class="col-md-4 col-sm-12">
+                <div class="card card-custom program-card shadow-lg">
+                    <img src="/static/assets/images/{{program.p_imagename}}.jpeg" height=200 width=100 class="card-img-top" alt="Card Image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{program.p_name}} <span>${{program.p_price}}</span></h5>
+                        <p class="card-text">{{program.p_description}}</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+                &nbsp;
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

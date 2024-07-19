@@ -5,6 +5,7 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    padding-bottom: 130px;
 }
 
 h1 {
@@ -160,4 +161,23 @@ h1.display-4, h2.card-title {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+
+/* Programs CSS */
+
+.title-container {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(251, 3, 3, 0.1);
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
+}
+.program-card {
+    transition: transform 0.2s;
+}
+.program-card:hover {
+    transform: scale(1.05);
 }
