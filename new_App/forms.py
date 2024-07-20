@@ -1,9 +1,10 @@
 from django import forms
-from .models import ContactMessage
+from .models import ContactMessage,NewsletterSubscriber
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Field
+from django import forms
 
 class ContactForm(forms.ModelForm):
     class Meta:
@@ -29,3 +30,10 @@ class RegistrationForm(forms.Form):
             Field('confirm_password', css_class='form-control'),
             Submit('submit', 'Register', css_class='btn btn-primary')
         )
+        
+        
+
+class NewsletterSignupForm(forms.ModelForm):
+    class Meta:
+        model = NewsletterSubscriber
+        fields = ['email']

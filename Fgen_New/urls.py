@@ -17,11 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
-
 from new_App import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('accounts/', include('allauth.urls')),
     path('', views.home, name='home'),
     path('about/', views.about_us, name='about_us'),
     path('programs/', views.programs, name='programs'),
@@ -33,5 +33,5 @@ urlpatterns = [
     path('resources/', views.resources_view, name='resources'),
     path('contact_us/', views.contact_us, name='contact_us'),
     path('contact_success/', views.contact_success, name='contact_success'),
-    path('admin/', admin.site.urls),
+    path('newsletter-signup/', views.newsletter_signup, name='newsletter_signup'),
 ]
