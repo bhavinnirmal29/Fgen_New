@@ -56,12 +56,22 @@
         
         @media (max-width: 768px) {
             .footer {
-                height: auto; /* Adjust height for smaller screens */
+                {% comment %} height: auto; /* Adjust height for smaller screens */ {% endcomment %}
                 padding-bottom: 20px;
             }
         
             .footer .col-md-4 {
                 margin-bottom: 20px; /* Adds spacing between sections on smaller screens */
+            }
+        }
+        @media (min-width: 768px) {
+            .footer {
+                {% comment %} height: auto; /* Adjust height for smaller screens */ {% endcomment %}
+                padding-bottom: 20px;
+            }
+        
+            .footer .col-md-4 {
+                margin-bottom: 64px; /* Adds spacing between sections on smaller screens */
             }
         }
     </style>
@@ -135,7 +145,7 @@
     <footer class="footer">
         <div class="container text-center">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 col-lg-4 col-sm-6">
                     <h5>Quick Links</h5>
                     <ul class="list-unstyled">
                         <li><a href="{% url 'home' %}" class="text-white-50">Home</a></li>
@@ -143,7 +153,7 @@
                         <li><a href="{% url 'contact_us' %}" class="text-white-50">Contact Us</a></li>
                     </ul>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-lg-4 col-sm-6">
                     <h5>Connect With Us</h5>
                     <div class="social-icons mb-3">
                         <a href="#" class="social-icon text-white mr-3"><i class="fab fa-instagram fa-2x"></i></a>
@@ -151,7 +161,7 @@
                         <a href="#" class="social-icon text-white"><i class="fab fa-twitter fa-2x"></i></a>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-lg-4 col-sm-12">
                     <h5>Newsletter</h5>
                     {% if messages %}
                         <div class="alert-container">
