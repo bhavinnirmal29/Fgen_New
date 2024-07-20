@@ -39,3 +39,17 @@ class NewsletterSubscriber(models.Model):
 
     def __str__(self):
         return self.email
+    
+class PDFDocument(models.Model):
+    file = models.FileField(upload_to='pdfs/')
+    title = models.CharField(max_length=255)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+    class Meta:
+        verbose_name = 'Newsletter Document'
+        verbose_name_plural = 'Newsletter Documents'
+
+    def __str__(self):
+        return self.title

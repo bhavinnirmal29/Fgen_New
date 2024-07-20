@@ -1,8 +1,100 @@
 {% extends 'base.html' %}
-{% load static%}
+{% load static %}
 {% block title %}Get Involved{% endblock %}
 
 {% block content %}
-    <h1>Welcome to My Website</h1>
-    <p>This is the Get Involved page.</p>
+  <style>
+    body {
+      background-color: #333; /* Dark background for contrast */
+      color: white; /* White text color */
+    }
+    h2, h3 {
+      color: #f8f9fa; /* Slightly lighter white for headings */
+    }
+    .container {
+      background-color: #444; /* Slightly lighter background for the container */
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+    .btn-success {
+      background-color: #28a745;
+      border-color: #28a745;
+    }
+  </style>
+
+  <!-- Partnerships Section -->
+  <section id="partnerships" class="container mt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Partnerships</h2>
+        <p>Do you want to partner with FGEN? Information on how to partner with FGEN.</p>
+        <h3>Benefits of Partnership</h3>
+        <ul>
+          <li>Benefit 1</li>
+          <li>Benefit 2</li>
+          <li>Benefit 3</li>
+        </ul>
+        <h3>Contact Form</h3>
+        <form>
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name">
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email">
+          </div>
+          <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea class="form-control" id="message"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Donate Section -->
+  <section id="donate" class="container mt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Donate</h2>
+        <p>Various donation options (one-time, recurring, sponsorship)</p>
+        <h3>Secure Online Donation Form</h3>
+        <form>
+          <div class="form-group">
+            <label for="donationAmount">Donation Amount:</label>
+            <input type="number" class="form-control" id="donationAmount">
+          </div>
+          <div class="form-group">
+            <label for="donationType">Donation Type:</label>
+            <select class="form-control" id="donationType">
+              <option>One-time</option>
+              <option>Recurring</option>
+              <option>Sponsorship</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-success">Donate</button>
+        </form>
+        <h3>Impact of Donations</h3>
+        <p>Impact of donations explained with examples</p>
+        <ul>
+          <li>Example 1</li>
+          <li>Example 2</li>
+          <li>Example 3</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
+
+{% block extra_js %}
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 {% endblock %}
