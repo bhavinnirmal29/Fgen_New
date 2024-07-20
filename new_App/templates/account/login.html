@@ -6,16 +6,38 @@
     <h3 class="text-center">This is the Login page.</h3>
 
     <div class="login-container">
-        <form class="login-form" method="POST" action="{% url 'login' %}">
+        <form class="login-form" method="POST" action="{% url 'account_login' %}">
             {% csrf_token %}
             <h2>Login</h2>
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <p>{{ error|escape }}</p>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error|escape }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+                <input type="text" class="form-control" id="id_login" name="login" placeholder="Enter your username" required>
+                {% if form.username.errors %}
+                    <div class="alert alert-danger">
+                        {{ form.username.errors }}
+                    </div>
+                {% endif %}
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                <input type="password" class="form-control" type="password" id="id_password" name="password" placeholder="Enter your password" required>
+                {% if form.password.errors %}
+                    <div class="alert alert-danger">
+                        {{ form.password.errors }}
+                    </div>
+                {% endif %}
             </div>
             <button type="submit" class="btn btn-primary btn-block">Login</button>
         </form>
