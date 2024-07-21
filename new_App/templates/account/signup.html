@@ -3,9 +3,9 @@
 {% block title %}Register{% endblock %}
 
 {% block content %}
-    <h3 class="text-center">This is the Registration page.</h3>
 
-    <div class="login-container">
+    <div class="login-container mt-5">
+        <div class="row">
         <form class="login-form" method="POST" action="{% url 'account_signup' %}">
             {% csrf_token %}
             <h2>Register</h2>
@@ -76,6 +76,7 @@
             </div>
             <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
         </form>
+    </div>
     </div>
 {% endblock %}
 

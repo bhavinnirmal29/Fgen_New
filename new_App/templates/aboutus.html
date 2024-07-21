@@ -32,6 +32,7 @@
         .impact-section {
             background: #f7f7f7;
             padding: 50px 0;
+            border-radius:10px;
         }
         .impact-item {
             margin: 20px 0;
@@ -109,7 +110,7 @@
     <div class="row">
         <div class="row justify-content-center">
             {% for l in leadership %}
-            <div class="col-md-4 col-sm-12">
+            <div class="col-md-4 col-sm-12 col-lg-4">
                 <div class="card card-custom program-card shadow-lg">
                     <img src="/static/assets/images/{{l.l_imagename}}.jpg" height=300 width=250 class="card-img-top" alt="Card Image">
                     <div class="card-body">

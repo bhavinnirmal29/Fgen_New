@@ -64,12 +64,13 @@ def register_view(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
+            username = form.cleaned_data['username']
             form.save()
             return redirect('login')  # Redirect to login page after successful registration
     else:
         form = RegistrationForm()
     
-    return render(request, 'register.html', {'form': form, 'active_page': 'register'})
+    return render(request, 'register.html', {'form': form, 'active_page': 'register', 'username':username})
 
 def resources_view(request):
     return render(request, 'resources.html', {'active_page': 'resources'})

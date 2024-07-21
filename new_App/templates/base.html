@@ -74,6 +74,17 @@
                 margin-bottom: 64px; /* Adds spacing between sections on smaller screens */
             }
         }
+        /* Sticky Navbar */
+        .navbar-fixed-top {
+            transition: top 0.3s;
+            
+        }
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>
@@ -136,7 +147,7 @@
     
     <!-- Main Content -->
     <div class="star-background"></div>
-    <div class="container main-content">
+    <div class="main-content">
         {% block content %}
         {% endblock %}
     </div>
@@ -201,5 +212,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="{% static 'assets/js/star.js' %}"></script>
+    <script src="{% static 'assets/js/navbar.js' %}"></script>
 </body>
 </html>

@@ -4,17 +4,16 @@
 
 {% block content %}
   <style>
-    body {
-      background-color: #333; /* Dark background for contrast */
-      color: white; /* White text color */
-    }
-    h2, h3 {
+
+    {% comment %} h2, h3 {
       color: #f8f9fa; /* Slightly lighter white for headings */
-    }
+    } {% endcomment %}
     .container {
       background-color: #444; /* Slightly lighter background for the container */
-      padding: 20px;
-      border-radius: 8px;
+      border-radius: 15px;
+      margin-top:30px;
+      margin-bottom:30px;
+      padding:30px;
     }
     .btn-primary {
       background-color: #007bff;
@@ -27,10 +26,10 @@
   </style>
 
   <!-- Partnerships Section -->
-  <section id="partnerships" class="container mt-5">
-    <div class="row">
+   <div class="container">
+    <div class="row text-white">
       <div class="col-md-12">
-        <h2>Partnerships</h2>
+        <h2 class="text-white">Partnerships</h2>
         <p>Do you want to partner with FGEN? Information on how to partner with FGEN.</p>
         <h3>Benefits of Partnership</h3>
         <ul>
@@ -56,11 +55,9 @@
         </form>
       </div>
     </div>
-  </section>
 
   <!-- Donate Section -->
-  <section id="donate" class="container mt-5">
-    <div class="row">
+    <div class="row text-white">
       <div class="col-md-12">
         <h2>Donate</h2>
         <p>Various donation options (one-time, recurring, sponsorship)</p>
@@ -89,8 +86,8 @@
         </ul>
       </div>
     </div>
-  </section>
-
+  </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}

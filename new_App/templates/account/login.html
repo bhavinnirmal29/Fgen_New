@@ -3,9 +3,9 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-    <h3 class="text-center">This is the Login page.</h3>
+    
 
-    <div class="login-container">
+    <div class="login-container" style="margin-top:20px;">
         <form class="login-form" method="POST" action="{% url 'account_login' %}">
             {% csrf_token %}
             <h2>Login</h2>

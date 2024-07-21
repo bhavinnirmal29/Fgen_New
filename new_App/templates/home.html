@@ -3,5 +3,138 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <h1>Welcome to My Home Page</h1>
+
+<style>
+
+    /* Full-screen video background */
+    .video-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+    }
+
+    .hero-section {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* Adjust overlay color and opacity */
+        z-index: 1;
+    }
+
+    .section-title {
+        margin: 50px 0 20px;
+    }
+    .container{
+        border-radius:20px;
+    }
+    .jumbotron{
+        border-radius:20px;
+    }
+</style>
+
+ <!-- Hero Section with Full-screen Video -->
+ <section class="hero-section">
+    <video class="video-background" autoplay muted loop>
+        <source src="your-video.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+        <h1 class="text-white">Welcome to FGEN</h1>
+        <h4 class="lead text-white">Empowering Future Generations Today!</p>
+        <a href="{% url 'about_us' %}" class="btn btn-primary btn-lg">Learn More</a>&nbsp;&nbsp;
+        <a href="{% url 'get_involved' %}" class="btn btn-secondary btn-lg">Donate Now</a>
+    </div>
+</section>
+<hr class="my-4">
+
+<!-- Introduction Section -->
+
+<!-- Vision and Mission Section -->
+<div class="vison-container container py-2 bg-light">
+    <h2 class="section-title text-center">Vision & Mission</h2>
+    <div class="row">
+        <div class="col-md-12 col-sm-12, col-lg-12">
+            <p>At FGEN (Future Generation), our mission is to educate, engage, and empower the upcoming generation with comprehensive knowledge about the brain, fostering a community of informed and inspired leaders. We strive to spread awareness about the intricacies of neuroscience and its impact on our daily lives, nurturing curiosity and promoting critical thinking. Through education, outreach, and innovative initiatives, FGEN aims to equip future leaders with the understanding and skills necessary to harness the power of the brain, driving progress and positive change in society. Together, we envision a world where knowledge of the brain fuels leadership, empathy, and innovation.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+ <!-- Educate, Engage, Empower Section -->
+<section id="features" class="container py-5">
+    <div class="jumbotron">
+        <h1 class="display-4">Featured Programs</h1>
+        <p class="lead">
+            FGEN holds neuroscience literacy sessions at junior high and elementary schools so that they can be more informed about neuroscience and the wonders of the brain! Please refer to the program page for more info!
+        </p>
+        
+      </div>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card feature-card text-center h-100">
+                <div class="card-body">
+                    <h3 class="card-title">Educate</h3>
+                    <p class="card-text">FGEN aims to educate students about the brain, making them well-informed about the basics of the brain.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card feature-card text-center h-100">
+                <div class="card-body">
+                    <h3 class="card-title">Engage</h3>
+                    <p class="card-text">FGEN aims to make presentations fun, interactive and engaging for students, making it a memorable experience for all.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card feature-card text-center h-100">
+                <div class="card-body">
+                    <h3 class="card-title">Empower</h3>
+                    <p class="card-text">FGEN aims to raise awareness on common neurodegenerative diseases and empower all those who may be dealing with any disorder or disease.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+ <div class="container">
+<section id="testimonials" class="testimonial text-center">
+    <div class="container">
+        <h2 class="section-title">Testimonials</h2>
+        <blockquote class="blockquote">
+            <p class="mb-0">"FGEN's presentations are incredibly informative and engaging. I've learned so much about the brain and its functions!"</p>
+            <footer class="blockquote-footer author">Jane Doe, Student</footer>
+        </blockquote>
+        <blockquote class="blockquote">
+            <p class="mb-0">"The FGEN team is doing an amazing job raising awareness about neurodegenerative diseases. Truly inspiring!"</p>
+            <footer class="blockquote-footer author">John Smith, Parent</footer>
+        </blockquote>
+    </div>
+</section>
+</div>
+
 {% endblock %}

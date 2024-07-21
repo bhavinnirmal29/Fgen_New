@@ -70,3 +70,6 @@ class UserPayment(models.Model):
 # def create_user_payment(sender, instance, created, **kwargs):
 # 	if created:
 # 		UserPayment.objects.create(app_user=instance)
+
+    
+    

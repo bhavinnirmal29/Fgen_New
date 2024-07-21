@@ -47,6 +47,7 @@ h1 {
 /* Main content wrapper */
 .main-content {
     flex: 1; /* This pushes the footer to the bottom */
+    margin-top:60px;
 }
 
 /* Login Page CSS */
@@ -245,4 +246,51 @@ a {
     left: 0;
     right: auto;
     width: 100%
+}
+
+/* HOme Page CSS */
+
+.home-container{
+    margin-top:60px;
+}
+.btn-stacked {
+    margin-top: 10px;
+}
+.home-section {
+    padding: 60px 0;
+}
+.home-section h2 {
+    margin-bottom: 30px;
+}
+.educate-engage-empower .col-md-4 {
+    margin-bottom: 30px;
+}
+.feature-card{
+    background-color: rgb(255, 234, 0);
+    border-radius: 20px;
+    font-weight: bold;
+    color:#000;
+    border: none;
+    border-radius: 15px;
+    transition: transform 0.3s;
+}
+
+.feature-card:hover {
+    transform: scale(1.05);
+}
+
+.testimonial {
+    background-color: rgb(255, 255, 255);
+    padding: 50px 0;
+    border-radius:20px;
+}
+
+.testimonial blockquote {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.testimonial .author {
+    font-weight: bold;
 }
