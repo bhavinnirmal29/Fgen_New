@@ -9,6 +9,9 @@ from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from .forms import NewsletterSignupForm
 from .models import NewsletterSubscriber
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+import time
 def home(request):
     return render(request, 'home.html', {'active_page': 'home'})
 
@@ -97,3 +100,75 @@ def newsletter_signup(request):
         form = NewsletterSignupForm()
 
     return render(request, 'home.html', {'form': form})
+
+import stripe
+@login_required(login_url='login')
+def product_page(request):
+	stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+	if request.method == 'POST':
+		checkout_session = stripe.checkout.Session.create(
+			payment_method_types = ['card'],
+			line_items = [
+				{
+					'price': settings.PRODUCT_PRICE,
+					'quantity': 1,
+				},
+			],
+			mode = 'payment',
+			customer_creation = 'always',
+			success_url = settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}',
+			cancel_url = settings.REDIRECT_DOMAIN + '/payment_cancelled',
+		)
+		return redirect(checkout_session.url, code=303)
+	return render(request, 'product_page.html')
+
+from .models import UserPayment
+## use Stripe dummy card: 4242 4242 4242 4242
+def payment_successful(request):
+    stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+    checkout_session_id = request.GET.get('session_id', None)
+    session = stripe.checkout.Session.retrieve(checkout_session_id)
+    customer = stripe.Customer.retrieve(session.customer)
+    # Create a new UserPayment record
+    user_payment = UserPayment.objects.create(
+        app_user=request.user,
+        stripe_charge_id=checkout_session_id,
+        amount=session.amount_total / 100,  # Convert from cents to dollars
+        currency=session.currency,
+        success=True
+    )
+    return render(request, 'payment_successful.html', {'customer': customer})
+
+
+def payment_cancelled(request):
+	stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+	return render(request, 'payment_cancelled.html')
+
+
+@csrf_exempt
+def stripe_webhook(request):
+    stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+    time.sleep(10)
+    payload = request.body
+    signature_header = request.META['HTTP_STRIPE_SIGNATURE']
+    event = None
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, signature_header, settings.STRIPE_WEBHOOK_SECRET_TEST
+        )
+    except ValueError as e:
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        return HttpResponse(status=400)
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+        session_id = session.get('id', None)
+        time.sleep(15)
+        # Mark the payment as successful in the database
+        try:
+            user_payment = UserPayment.objects.get(stripe_charge_id=session_id)
+            user_payment.success = True
+            user_payment.save()
+        except UserPayment.DoesNotExist:
+            pass
+    return HttpResponse(status=200)

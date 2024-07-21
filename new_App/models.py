@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 class ContactMessage(models.Model):
     name = models.CharField(max_length=100)
@@ -53,3 +53,20 @@ class PDFDocument(models.Model):
 
     def __str__(self):
         return self.title
+    
+from django.dispatch import receiver
+from django.db.models.signals import post_save   
+
+class UserPayment(models.Model):
+    app_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    stripe_charge_id = models.CharField(max_length=500,default="")
+    amount = models.DecimalField(max_digits=10, decimal_places=2,default=0)
+    currency = models.CharField(max_length=10, default='usd')
+    payment_date = models.DateTimeField(auto_now_add=True)
+    success = models.BooleanField(default=False)
+    def __str__(self):
+        return f"{self.app_user.username} - {self.stripe_charge_id}"
+# @receiver(post_save, sender=User)
+# def create_user_payment(sender, instance, created, **kwargs):
+# 	if created:
+# 		UserPayment.objects.create(app_user=instance)
