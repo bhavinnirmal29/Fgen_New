@@ -1,8 +1,8 @@
-from contextlib import redirect_stdout
+from django.utils import timezone
 from django.shortcuts import render,redirect
 from .forms import ContactForm
-from .forms import RegistrationForm
-from .models import Programs, Leadership
+from .forms import RegistrationForm, EventForm
+from .models import Programs, Leadership, Event
 from django.contrib import messages
 from django.conf import settings
 from django.core.mail import send_mail
@@ -11,7 +11,7 @@ from .forms import NewsletterSignupForm
 from .models import NewsletterSubscriber
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
-import time
+
 def home(request):
     return render(request, 'home.html', {'active_page': 'home'})
 
@@ -173,3 +173,20 @@ def stripe_webhook(request):
         except UserPayment.DoesNotExist:
             pass
     return HttpResponse(status=200)
+
+
+def create_event(request):
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('events_page')
+    else:
+        form = EventForm()
+    return render(request, 'create_event.html', {'form': form})
+
+def events_page(request):
+    upcoming_events = Event.objects.filter(event_date__gte=timezone.now()).order_by('event_date')
+    events = Event.objects.all()
+    past_events = Event.objects.filter(event_date__lt=timezone.now()).order_by('-event_date')
+    return render(request, 'events_page.html', {'upcoming_events': upcoming_events, 'past_events': past_events})

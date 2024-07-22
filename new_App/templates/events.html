@@ -3,6 +3,36 @@
 {% block title %}Events{% endblock %}
 
 {% block content %}
-    <h1>Welcome to My Website</h1>
-    <p>This is the Events page.</p>
+<div class="container mt-5 text-white">
+    <h2>Upcoming Events</h2>
+    {% if upcoming_events %}
+        <div class="list-group">
+            {% for event in upcoming_events %}
+                <a href="#" class="list-group-item list-group-item-action">
+                    <h5 class="mb-1">{{ event.title }}</h5>
+                    <p class="mb-1">{{ event.description }}</p>
+                    <small>{{ event.location }} | {{ event.event_date }}</small>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No upcoming events.</p>
+    {% endif %}
+
+    <h2 class="mt-5">Past Events</h2>
+    {% if past_events %}
+        <div class="list-group">
+            {% for event in past_events %}
+                <a href="#" class="list-group-item list-group-item-action">
+                    <h5 class="mb-1">{{ event.title }}</h5>
+                    <p class="mb-1">{{ event.description }}</p>
+                    <small>{{ event.location }} | {{ event.event_date }}</small>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No past events.</p>
+    {% endif %}
+</div>
+
 {% endblock %}

@@ -38,4 +38,6 @@ urlpatterns = [
 	path('payment_successful', views.payment_successful, name='payment_successful'),
 	path('payment_cancelled', views.payment_cancelled, name='payment_cancelled'),
 	path('stripe_webhook', views.stripe_webhook, name='stripe_webhook'),
+    path('events/', views.events_page, name='events_page'),
+    path('events/create/', views.create_event, name='create_event'),
 ]

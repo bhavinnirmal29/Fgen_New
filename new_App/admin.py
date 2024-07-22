@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ContactMessage, Programs, Leadership,NewsletterSubscriber,PDFDocument,UserPayment
+from .models import ContactMessage, Programs, Leadership,NewsletterSubscriber,PDFDocument,UserPayment, Event
 
 # Register your models here.
 
@@ -7,6 +7,7 @@ admin.site.register(ContactMessage)
 admin.site.register(Programs)
 admin.site.register(Leadership)
 admin.site.register(UserPayment)
+admin.site.register(Event)
 
 @admin.register(PDFDocument)
 class PDFDocumentAdmin(admin.ModelAdmin):

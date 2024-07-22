@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Field
 from django import forms
+from .models import Event
 
 class ContactForm(forms.ModelForm):
     class Meta:
@@ -37,3 +38,12 @@ class NewsletterSignupForm(forms.ModelForm):
     class Meta:
         model = NewsletterSubscriber
         fields = ['email']
+
+
+class EventForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = ['title', 'description', 'location', 'event_date']
+        widgets = {
+            'event_date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        }

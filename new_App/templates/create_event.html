@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static%}
+{% block title %}Create Event{% endblock %}
+
+{% block content %}
+    
+<div class="container mt-5">
+    <h2>Create a New Event</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Create Event</button>
+    </form>
+</div>
+
+{% endblock %}
