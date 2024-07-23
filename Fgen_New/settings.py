@@ -169,3 +169,6 @@ STRIPE_WEBHOOK_SECRET_TEST ="whsec_c3f5766c53f559522d1498f3e5ee3e7d3745179fad4d3
 PRODUCT_PRICE = "price_1Pf4yoFQ7fQ9eiOGaulD4Gdx"#os.getenv('PRODUCT_PRICE')
 
 REDIRECT_DOMAIN = 'http://127.0.0.1:8000'
+
+# Static files storage
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
