@@ -171,4 +171,4 @@ PRODUCT_PRICE = "price_1Pf4yoFQ7fQ9eiOGaulD4Gdx"#os.getenv('PRODUCT_PRICE')
 REDIRECT_DOMAIN = 'http://127.0.0.1:8000'
 
 # Static files storage
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
