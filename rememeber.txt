@@ -1,3 +1,0 @@
-1)bootstrap grid system 4, for responsiveness alwayas.
-2)it gives div container,then column and add rows inside and that will always be responsive so ask
-chatgpt to give that.
