@@ -18,7 +18,7 @@ django-allauth==0.63.6
 django-crispy-forms==2.2
 dnspython==2.6.1
 email_validator==2.2.0
-fastadmin==0.1.41
+# fastadmin==0.1.41
 fastapi==0.111.0
 fastapi-admin==1.0.4
 fastapi-cli==0.0.4
