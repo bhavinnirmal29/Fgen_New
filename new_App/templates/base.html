@@ -114,9 +114,6 @@
                 <li class="nav-item">
                     <a class="nav-link {% if active_page == 'events' %}active{% endif %}" href="{% url 'events' %}">Events</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if active_page == 'resources' %}active{% endif %}" href="{% url 'resources' %}">Resources</a>
-                </li>
             </ul>
             <ul class="navbar-nav">
                 {% if user.is_authenticated %}
