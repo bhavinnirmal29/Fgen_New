@@ -72,8 +72,6 @@ def register_view(request):
     
     return render(request, 'register.html', {'form': form, 'active_page': 'register', 'username':username})
 
-def resources_view(request):
-    return render(request, 'resources.html', {'active_page': 'resources'})
 
 def newsletter_signup(request):
     if request.method == 'POST':
