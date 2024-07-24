@@ -71,5 +71,5 @@ uvicorn==0.30.1
 watchfiles==0.22.0
 websockets==12.0
 gunicorn
-whitenoise
+whitenoise==3.3.1
 dynoscale
