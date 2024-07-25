@@ -20,6 +20,7 @@ def about_us(request):
     leadership = Leadership.objects.all()
     return render(request, 'aboutus.html', {'active_page': 'about', 'leadership':leadership})
 
+@login_required
 def contact_us(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
