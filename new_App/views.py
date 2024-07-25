@@ -2,7 +2,7 @@ from django.utils import timezone
 from django.shortcuts import render,redirect
 from .forms import ContactForm
 from .forms import RegistrationForm, EventForm
-from .models import Programs, Leadership, Event
+from .models import Programs, Leadership, Event, WebData
 from django.contrib import messages
 from django.conf import settings
 from django.core.mail import send_mail
@@ -14,12 +14,24 @@ from django.http import HttpResponse
 import time
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+
+
 def home(request):
     return render(request, 'home.html', {'active_page': 'home'})
 
 def about_us(request):
     leadership = Leadership.objects.all()
-    return render(request, 'aboutus.html', {'active_page': 'about', 'leadership':leadership})
+    visiondata=WebData.objects.get(title = 'vision')
+    missiondata=WebData.objects.get(title = 'mission')
+    aboutdata = WebData.objects.get(title='about_text')
+    context = {
+        'leadership': leadership,
+        'vision': visiondata,
+        'mission':missiondata,
+        'about':aboutdata,
+        'active_page': 'about'
+    }
+    return render(request, 'aboutus.html', context)
 
 def contact_us(request):
     if request.method == 'POST':
