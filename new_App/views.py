@@ -12,6 +12,7 @@ from .models import NewsletterSubscriber
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import time
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def home(request):
     return render(request, 'home.html', {'active_page': 'home'})
@@ -57,8 +58,34 @@ def get_involved(request):
 def events(request):
     upcoming_events = Event.objects.filter(event_date__gte=timezone.now()).order_by('event_date')
     past_events = Event.objects.filter(event_date__lt=timezone.now()).order_by('-event_date')
-    return render(request, 'events.html', {'upcoming_events': upcoming_events, 'past_events': past_events, 'active_page': 'events'})
 
+    # Pagination for upcoming events
+    paginator_upcoming = Paginator(upcoming_events, 5)  # Show 5 events per page
+    page = request.GET.get('page_upcoming')
+    try:
+        upcoming_events = paginator_upcoming.page(page)
+    except PageNotAnInteger:
+        upcoming_events = paginator_upcoming.page(1)
+    except EmptyPage:
+        upcoming_events = paginator_upcoming.page(paginator_upcoming.num_pages)
+
+    # Pagination for past events
+    paginator_past = Paginator(past_events, 5)  # Show 5 events per page
+    page = request.GET.get('page_past')
+    try:
+        past_events = paginator_past.page(page)
+    except PageNotAnInteger:
+        past_events = paginator_past.page(1)
+    except EmptyPage:
+        past_events = paginator_past.page(paginator_past.num_pages)
+
+    context = {
+        'upcoming_events': upcoming_events,
+        'past_events': past_events,
+        'active_page':'events'
+    }
+
+    return render(request, 'events.html', context)
 def login_view(request):
     return render(request, 'login.html', {'active_page': 'login'})
 
