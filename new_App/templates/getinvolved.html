@@ -6,19 +6,18 @@
 
   <!-- Partnerships Section -->
    <div class="container container-getinvolved">
-    <div class="row text-white">
+    <div class="row">
       <div class="col-md-12 col-sm-12 col-lg-12">
-        <h2 class="text-white">Partnerships</h2>
-        <p>Do you want to partner with FGEN? Information on how to partner with FGEN.</p>
-        <h3>Benefits of Partnership</h3>
-        <ul>
-          {% for b in benefit_data %}
-            <li>{{b.description_text}}</li>
-          {% endfor %}
-          
-        </ul>
+          <h2 class="text-center text-white">PARTNERSHIPS</h2>
+          <p class="text-center text-white">Do you want to partner with FGEN? Information on how to partner with FGEN.</p>
+          <h3 class="text-center text-white">Benefits of Partnership</h3>
+          <ul class="benefits-list">
+              {% for b in benefit_data %}
+                  <li class="benefit-item">{{ b.description_text }}</li>
+              {% endfor %}
+          </ul>
       </div>
-    </div>
+  </div>
 
   <!-- Donate Section -->
     <div class="row text-white">
