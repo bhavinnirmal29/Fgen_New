@@ -50,15 +50,12 @@
               <h4>Impact of Donations</h4>
           </div>
           <div class="card-body text-black">
-              <p>Impact of donations explained with examples</p>
-              <div class="example">
-                  <h5>Impact 1</h5>
-                  <p>Through your donations we'll be able to provide students access to colouring sheets, brain fact sheets and goody bags!</p>
-              </div>
+              <h4>Impact of Donations!</h4>
+              {% for i in impact_data %}
               <div class="example mt-3">
-                  <h5>Impact 2</h5>
-                  <p>Through your donations we'll be able to further incorporate more neuroscience resources for students!</p>
+                  <p> - {{i.description_text}}</p>
               </div>
+              {% endfor %}
           </div>
       </div>
       </div>

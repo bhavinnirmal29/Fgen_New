@@ -15,10 +15,11 @@ import time
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-
+# Home View
 def home(request):
     return render(request, 'home.html', {'active_page': 'home'})
 
+# About Us View
 def about_us(request):
     leadership = Leadership.objects.all()
     visiondata=WebData.objects.get(title = 'vision')
@@ -41,6 +42,7 @@ def about_us(request):
     }
     return render(request, 'aboutus.html', context)
 
+# Contact Us View
 def contact_us(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -67,16 +69,18 @@ def contact_us(request):
 def contact_success(request):
     return render(request, 'contact_success.html')
     
-
+# Programs View
 def programs(request):
     programs = Programs.objects.all()
     return render(request, 'programs.html', {'active_page': 'programs', 'programs':programs})
 
+# Get Involved View
 def get_involved(request):
     benefit_data = WebData.objects.filter(page_name = 'GetInvolved')
-    print(benefit_data)
+    impact_data = WebData.objects.filter(page_name = 'GetInvolved_Impact')
     context = {
         'benefit_data':benefit_data,
+        'impact_data':impact_data,
         'active_page': 'getinvolved'
     }
     return render(request, 'getinvolved.html', context)
