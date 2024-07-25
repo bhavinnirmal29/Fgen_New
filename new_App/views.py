@@ -11,6 +11,7 @@ from .forms import NewsletterSignupForm
 from .models import NewsletterSubscriber
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
+import time
 
 def home(request):
     return render(request, 'home.html', {'active_page': 'home'})
@@ -19,7 +20,6 @@ def about_us(request):
     leadership = Leadership.objects.all()
     return render(request, 'aboutus.html', {'active_page': 'about', 'leadership':leadership})
 
-@login_required
 def contact_us(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -55,7 +55,9 @@ def get_involved(request):
     return render(request, 'getinvolved.html', {'active_page': 'getinvolved'})
 
 def events(request):
-    return render(request, 'events.html', {'active_page': 'events'})
+    upcoming_events = Event.objects.filter(event_date__gte=timezone.now()).order_by('event_date')
+    past_events = Event.objects.filter(event_date__lt=timezone.now()).order_by('-event_date')
+    return render(request, 'events.html', {'upcoming_events': upcoming_events, 'past_events': past_events, 'active_page': 'events'})
 
 def login_view(request):
     return render(request, 'login.html', {'active_page': 'login'})
@@ -182,9 +184,3 @@ def create_event(request):
     else:
         form = EventForm()
     return render(request, 'create_event.html', {'form': form})
-
-def events_page(request):
-    upcoming_events = Event.objects.filter(event_date__gte=timezone.now()).order_by('event_date')
-    events = Event.objects.all()
-    past_events = Event.objects.filter(event_date__lt=timezone.now()).order_by('-event_date')
-    return render(request, 'events_page.html', {'upcoming_events': upcoming_events, 'past_events': past_events})

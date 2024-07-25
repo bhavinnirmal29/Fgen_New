@@ -27,9 +27,6 @@ urlpatterns = [
     path('programs/', views.programs, name='programs'),
     path('involved/', views.get_involved, name='get_involved'),
     path('events/', views.events, name='events'),
-    # path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-    # path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    # path('register/', views.register_view, name='register'),
     path('contact_us/', views.contact_us, name='contact_us'),
     path('contact_success/', views.contact_success, name='contact_success'),
     path('newsletter-signup/', views.newsletter_signup, name='newsletter_signup'),
@@ -37,6 +34,5 @@ urlpatterns = [
 	path('payment_successful', views.payment_successful, name='payment_successful'),
 	path('payment_cancelled', views.payment_cancelled, name='payment_cancelled'),
 	path('stripe_webhook', views.stripe_webhook, name='stripe_webhook'),
-    path('events/', views.events_page, name='events_page'),
     path('events/create/', views.create_event, name='create_event'),
 ]
