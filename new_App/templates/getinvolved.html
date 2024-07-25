@@ -12,9 +12,10 @@
         <p>Do you want to partner with FGEN? Information on how to partner with FGEN.</p>
         <h3>Benefits of Partnership</h3>
         <ul>
-          <li>Benefit 1</li>
-          <li>Benefit 2</li>
-          <li>Benefit 3</li>
+          {% for b in benefit_data %}
+            <li>{{b.description_text}}</li>
+          {% endfor %}
+          
         </ul>
       </div>
     </div>

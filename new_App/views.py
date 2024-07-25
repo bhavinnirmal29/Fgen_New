@@ -24,12 +24,20 @@ def about_us(request):
     visiondata=WebData.objects.get(title = 'vision')
     missiondata=WebData.objects.get(title = 'mission')
     aboutdata = WebData.objects.get(title='about_text')
+    aboutheader = WebData.objects.get(title = 'header')
+    ss = WebData.objects.get(title = 'successstory')
+    cs = WebData.objects.get(title = 'casestudy')
+    sc = WebData.objects.get(title = 'satisfied_clients')
     context = {
         'leadership': leadership,
         'vision': visiondata,
         'mission':missiondata,
         'about':aboutdata,
-        'active_page': 'about'
+        'header':aboutheader,
+        'active_page': 'about',
+        'ss1':ss,
+        'cs1':cs,
+        'sc1':sc
     }
     return render(request, 'aboutus.html', context)
 
@@ -65,7 +73,13 @@ def programs(request):
     return render(request, 'programs.html', {'active_page': 'programs', 'programs':programs})
 
 def get_involved(request):
-    return render(request, 'getinvolved.html', {'active_page': 'getinvolved'})
+    benefit_data = WebData.objects.filter(page_name = 'GetInvolved')
+    print(benefit_data)
+    context = {
+        'benefit_data':benefit_data,
+        'active_page': 'getinvolved'
+    }
+    return render(request, 'getinvolved.html', context)
 
 def events(request):
     upcoming_events = Event.objects.filter(event_date__gte=timezone.now()).order_by('event_date')
