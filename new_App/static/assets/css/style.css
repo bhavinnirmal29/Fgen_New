@@ -294,3 +294,20 @@ a {
 .testimonial .author {
     font-weight: bold;
 }
+
+/* GetInvolved CSS */
+
+.container-getinvolved {
+    background-color: #444; /* Slightly lighter background for the container */
+    border-radius: 15px;
+    margin-top:30px;
+    margin-bottom:30px;
+    padding:30px;
+  }
+  .btn-success-getinvolved {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+  .impact-card{
+    margin-top:20px;
+  }

@@ -3,32 +3,11 @@
 {% block title %}Get Involved{% endblock %}
 
 {% block content %}
-  <style>
-
-    {% comment %} h2, h3 {
-      color: #f8f9fa; /* Slightly lighter white for headings */
-    } {% endcomment %}
-    .container {
-      background-color: #444; /* Slightly lighter background for the container */
-      border-radius: 15px;
-      margin-top:30px;
-      margin-bottom:30px;
-      padding:30px;
-    }
-    .btn-primary {
-      background-color: #007bff;
-      border-color: #007bff;
-    }
-    .btn-success {
-      background-color: #28a745;
-      border-color: #28a745;
-    }
-  </style>
 
   <!-- Partnerships Section -->
-   <div class="container">
+   <div class="container container-getinvolved">
     <div class="row text-white">
-      <div class="col-md-12">
+      <div class="col-md-12 col-sm-12 col-lg-12">
         <h2 class="text-white">Partnerships</h2>
         <p>Do you want to partner with FGEN? Information on how to partner with FGEN.</p>
         <h3>Benefits of Partnership</h3>
@@ -42,7 +21,7 @@
 
   <!-- Donate Section -->
     <div class="row text-white">
-      <div class="col-md-12">
+      <div class="col-md-12 col-sm-12 col-lg-12">
         <h2>Donate</h2>
         <p>Various donation options (one-time, recurring, sponsorship)</p>
         <h3>Secure Online Donation Form</h3>
@@ -59,15 +38,28 @@
               <option>Sponsorship</option>
             </select>
           </div>
-          <button type="submit" class="btn btn-success">Donate</button>
+          <button type="submit" class="btn btn-success btn-success-getinvolved">Donate</button>
         </form>
-        <h3>Impact of Donations</h3>
-        <p>Impact of donations explained with examples</p>
-        <ul>
-          <li>Example 1</li>
-          <li>Example 2</li>
-          <li>Example 3</li>
-        </ul>
+      </div>
+    </div>
+    <div class="row text-black">
+      <div class="col-md-12 col-sm-12 col-lg-12">
+        <div class="card impact-card">
+          <div class="card-header bg-primary text-white">
+              <h4>Impact of Donations</h4>
+          </div>
+          <div class="card-body text-black">
+              <p>Impact of donations explained with examples</p>
+              <div class="example">
+                  <h5>Impact 1</h5>
+                  <p>Through your donations we'll be able to provide students access to colouring sheets, brain fact sheets and goody bags!</p>
+              </div>
+              <div class="example mt-3">
+                  <h5>Impact 2</h5>
+                  <p>Through your donations we'll be able to further incorporate more neuroscience resources for students!</p>
+              </div>
+          </div>
+      </div>
       </div>
     </div>
   </div>
