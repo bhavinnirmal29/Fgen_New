@@ -178,6 +178,7 @@ h1.display-4, h2.card-title {
 }
 .program-card {
     transition: transform 0.2s;
+    border-radius: 10px;
 }
 .program-card:hover {
     transform: scale(1.05);
@@ -332,4 +333,24 @@ a {
 }
 .benefit-item:hover {
     background: #a81fda;
+}
+
+
+/* Jumbotron Custom CSS */
+
+.jumbotron-custom {
+    background: linear-gradient(to right, #fddb3a, #f7c600);
+    color: white;
+    padding: 2rem 1rem;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+.jumbotron-custom h1 {
+    font-size: 2.5rem;
+}
+.jumbotron-custom p {
+    font-size: 1.25rem;
+}
+.jumbotron-custom:hover {
+    transform: scale(1.05);
 }
