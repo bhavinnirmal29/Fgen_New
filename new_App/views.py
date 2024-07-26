@@ -2,7 +2,7 @@ from django.utils import timezone
 from django.shortcuts import render,redirect
 from .forms import ContactForm
 from .forms import RegistrationForm, EventForm
-from .models import Programs, Leadership, Event
+from .models import Programs, Leadership, Event, WebData
 from django.contrib import messages
 from django.conf import settings
 from django.core.mail import send_mail
@@ -11,15 +11,38 @@ from .forms import NewsletterSignupForm
 from .models import NewsletterSubscriber
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
+import time
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+
+# Home View
 def home(request):
     return render(request, 'home.html', {'active_page': 'home'})
 
+# About Us View
 def about_us(request):
     leadership = Leadership.objects.all()
-    return render(request, 'aboutus.html', {'active_page': 'about', 'leadership':leadership})
+    visiondata=WebData.objects.get(title = 'vision')
+    missiondata=WebData.objects.get(title = 'mission')
+    aboutdata = WebData.objects.get(title='about_text')
+    aboutheader = WebData.objects.get(title = 'header')
+    ss = WebData.objects.get(title = 'successstory')
+    cs = WebData.objects.get(title = 'casestudy')
+    sc = WebData.objects.get(title = 'satisfied_clients')
+    context = {
+        'leadership': leadership,
+        'vision': visiondata,
+        'mission':missiondata,
+        'about':aboutdata,
+        'header':aboutheader,
+        'active_page': 'about',
+        'ss1':ss,
+        'cs1':cs,
+        'sc1':sc
+    }
+    return render(request, 'aboutus.html', context)
 
-@login_required
+# Contact Us View
 def contact_us(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -46,17 +69,53 @@ def contact_us(request):
 def contact_success(request):
     return render(request, 'contact_success.html')
     
-
+# Programs View
 def programs(request):
     programs = Programs.objects.all()
     return render(request, 'programs.html', {'active_page': 'programs', 'programs':programs})
 
+# Get Involved View
 def get_involved(request):
-    return render(request, 'getinvolved.html', {'active_page': 'getinvolved'})
+    benefit_data = WebData.objects.filter(page_name = 'GetInvolved')
+    impact_data = WebData.objects.filter(page_name = 'GetInvolved_Impact')
+    context = {
+        'benefit_data':benefit_data,
+        'impact_data':impact_data,
+        'active_page': 'getinvolved'
+    }
+    return render(request, 'getinvolved.html', context)
 
 def events(request):
-    return render(request, 'events.html', {'active_page': 'events'})
+    upcoming_events = Event.objects.filter(event_date__gte=timezone.now()).order_by('event_date')
+    past_events = Event.objects.filter(event_date__lt=timezone.now()).order_by('-event_date')
 
+    # Pagination for upcoming events
+    paginator_upcoming = Paginator(upcoming_events, 5)  # Show 5 events per page
+    page = request.GET.get('page_upcoming')
+    try:
+        upcoming_events = paginator_upcoming.page(page)
+    except PageNotAnInteger:
+        upcoming_events = paginator_upcoming.page(1)
+    except EmptyPage:
+        upcoming_events = paginator_upcoming.page(paginator_upcoming.num_pages)
+
+    # Pagination for past events
+    paginator_past = Paginator(past_events, 5)  # Show 5 events per page
+    page = request.GET.get('page_past')
+    try:
+        past_events = paginator_past.page(page)
+    except PageNotAnInteger:
+        past_events = paginator_past.page(1)
+    except EmptyPage:
+        past_events = paginator_past.page(paginator_past.num_pages)
+
+    context = {
+        'upcoming_events': upcoming_events,
+        'past_events': past_events,
+        'active_page':'events'
+    }
+
+    return render(request, 'events.html', context)
 def login_view(request):
     return render(request, 'login.html', {'active_page': 'login'})
 
@@ -72,8 +131,6 @@ def register_view(request):
     
     return render(request, 'register.html', {'form': form, 'active_page': 'register', 'username':username})
 
-def resources_view(request):
-    return render(request, 'resources.html', {'active_page': 'resources'})
 
 def newsletter_signup(request):
     if request.method == 'POST':
@@ -184,9 +241,3 @@ def create_event(request):
     else:
         form = EventForm()
     return render(request, 'create_event.html', {'form': form})
-
-def events_page(request):
-    upcoming_events = Event.objects.filter(event_date__gte=timezone.now()).order_by('event_date')
-    events = Event.objects.all()
-    past_events = Event.objects.filter(event_date__lt=timezone.now()).order_by('-event_date')
-    return render(request, 'events_page.html', {'upcoming_events': upcoming_events, 'past_events': past_events})

@@ -3,7 +3,7 @@
 {% block title %}Events{% endblock %}
 
 {% block content %}
-<div class="container mt-5 text-white">
+{% comment %} <div class="container mt-5 text-white">
     <h2>Upcoming Events</h2>
     {% if upcoming_events %}
         <div class="list-group">
@@ -28,11 +28,93 @@
                     <p class="mb-1">{{ event.description }}</p>
                     <small>{{ event.location }} | {{ event.event_date }}</small>
                 </a>
+                &nbsp;
             {% endfor %}
         </div>
     {% else %}
         <p>No past events.</p>
     {% endif %}
-</div>
+</div> {% endcomment %}
+<div class="container mt-5 text-white">
+    <h2>Upcoming Events</h2>
+    {% if upcoming_events %}
+        <div class="list-group">
+            {% for event in upcoming_events %}
+                <a href="#" class="list-group-item list-group-item-action">
+                    <h5 class="mb-1">{{ event.title }}</h5>
+                    <p class="mb-1">{{ event.description }}</p>
+                    <small>Location: {{ event.location }} | Date & Time: {{ event.event_date }}</small>
+                </a>
+                &nbsp;
+            {% endfor %}
+        </div>
+        <nav aria-label="Upcoming events pagination">
+            <ul class="pagination justify-content-center">
+                {% if upcoming_events.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page_upcoming={{ upcoming_events.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+                {% for num in upcoming_events.paginator.page_range %}
+                    {% if upcoming_events.number == num %}
+                        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% elif num > upcoming_events.number|add:'-3' and num < upcoming_events.number|add:'3' %}
+                        <li class="page-item"><a class="page-link" href="?page_upcoming={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if upcoming_events.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page_upcoming={{ upcoming_events.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% else %}
+        <p>No upcoming events.</p>
+    {% endif %}
 
+    <h2 class="mt-5">Past Events</h2>
+    {% if past_events %}
+        <div class="list-group">
+            {% for event in past_events %}
+                <a href="#" class="list-group-item list-group-item-action">
+                    <h5 class="mb-1">{{ event.title }}</h5>
+                    <p class="mb-1">{{ event.description }}</p>
+                    <small>{{ event.location }} | {{ event.event_date }}</small>
+                </a>
+            {% endfor %}
+        </div>
+        <nav aria-label="Past events pagination">
+            <ul class="pagination justify-content-center">
+                {% if past_events.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page_past={{ past_events.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+                {% for num in past_events.paginator.page_range %}
+                    {% if past_events.number == num %}
+                        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% elif num > past_events.number|add:'-3' and num < past_events.number|add:'3' %}
+                        <li class="page-item"><a class="page-link" href="?page_past={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if past_events.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page_past={{ past_events.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% else %}
+        <p>No past events.</p>
+    {% endif %}
+</div>
 {% endblock %}
