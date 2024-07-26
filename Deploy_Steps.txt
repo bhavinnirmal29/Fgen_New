@@ -1,0 +1,10 @@
+1)python manage.py collectstatic
+2)git add .
+3)git commit --allow-empty -m "adding domain connection"
+4)git push heroku master
+5)heroku ps:scale web=1  
+6)heroku run python manage.py runserver or turn the web/dynoscale toggle on from the dashboard.
+7)add ssl certi
+8)change the domain to custom domain name from heroku  settings panel
+9)copy the dns target url and go to godaddy and change the cname to point to that target url.
+10)set the forwarding of to https://fgen.ca from goddady settings.
