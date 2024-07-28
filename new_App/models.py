@@ -68,7 +68,7 @@ class UserPayment(models.Model):
     success = models.BooleanField(default=False)
     donation_type = models.CharField(max_length=50,default="regular")
     def __str__(self):
-        return f"{self.app_user.username} - {self.stripe_charge_id}"
+        return f"{self.app_user} - {self.stripe_charge_id}"
 # @receiver(post_save, sender=User)
 # def create_user_payment(sender, instance, created, **kwargs):
 # 	if created:
