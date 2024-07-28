@@ -285,7 +285,7 @@ def stripe_webhook(request):
 
             # Create and finalize the invoice
             invoice = stripe.Invoice.create(
-                customer=session.customer,
+                customer=stripe.Customer.retrieve(session.customer).id,
                 collection_method='send_invoice',  # Auto-finalize this draft after ~1 hour
             )
             # Finalize and send the invoice
