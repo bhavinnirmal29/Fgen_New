@@ -75,15 +75,15 @@ def programs(request):
     return render(request, 'programs.html', {'active_page': 'programs', 'programs':programs})
 
 # Get Involved View
-def get_involved(request):
-    benefit_data = WebData.objects.filter(page_name = 'GetInvolved')
-    impact_data = WebData.objects.filter(page_name = 'GetInvolved_Impact')
-    context = {
-        'benefit_data':benefit_data,
-        'impact_data':impact_data,
-        'active_page': 'getinvolved'
-    }
-    return render(request, 'getinvolved.html', context)
+# def get_involved(request):
+#     benefit_data = WebData.objects.filter(page_name = 'GetInvolved')
+#     impact_data = WebData.objects.filter(page_name = 'GetInvolved_Impact')
+#     context = {
+#         'benefit_data':benefit_data,
+#         'impact_data':impact_data,
+#         'active_page': 'getinvolved'
+#     }
+#     return render(request, 'getinvolved.html', context)
 
 def events(request):
     upcoming_events = Event.objects.filter(event_date__gte=timezone.now()).order_by('event_date')
@@ -116,6 +116,7 @@ def events(request):
     }
 
     return render(request, 'events.html', context)
+
 def login_view(request):
     return render(request, 'login.html', {'active_page': 'login'})
 
@@ -160,9 +161,16 @@ def newsletter_signup(request):
     return render(request, 'home.html', {'form': form})
 
 import stripe
-@login_required(login_url='/accounts/login/')
+# @login_required(login_url='/accounts/login/')
 def getinvolved_page(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+    benefit_data = WebData.objects.filter(page_name = 'GetInvolved')
+    impact_data = WebData.objects.filter(page_name = 'GetInvolved_Impact')
+    context = {
+        'benefit_data':benefit_data,
+        'impact_data':impact_data,
+        'active_page': 'getinvolved'
+    }
     if request.method == 'POST':
         donation_amount = int(request.POST.get('donation_amount')) * 100
         donation_type = request.POST.get('donation_type')
@@ -215,7 +223,7 @@ def getinvolved_page(request):
             cancel_url = settings.REDIRECT_DOMAIN + '/payment_cancelled',
         )
         return redirect(checkout_session.url, code=303)
-    return render(request, 'getinvolved.html')
+    return render(request, 'getinvolved.html', context)
 
 from .models import UserPayment
 ## use Stripe dummy card: 4242 4242 4242 4242
