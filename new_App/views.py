@@ -278,7 +278,7 @@ def stripe_webhook(request):
                 # Create an invoice item
             stripe.InvoiceItem.create(
                 customer=session.customer,
-                amount=user_payment.amount,
+                amount=int(user_payment.amount * 100),
                 currency='cad',
                 description=f"{user_payment.donation_type.capitalize()} Donation",
             )
