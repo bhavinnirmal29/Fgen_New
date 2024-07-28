@@ -25,7 +25,6 @@
         <h2>Donate</h2>
         <p>Various donation options (one-time, recurring, sponsorship)</p>
         <h3>Secure Online Donation Form</h3>
-        {% comment %} {% if user.is_authenticated %} {% endcomment %}
         <form enctype="multipart/form-data" method="post" action="{% url 'get_involved' %}">
           {% csrf_token %}
           <div class="form-group">
@@ -42,8 +41,6 @@
           </div>
           <button type="submit" class="btn btn-success btn-success-getinvolved">Donate</button>
         </form>
-        {% comment %} {% else %}
-      <h2>You're not logged in...</h2><a href="{% url 'login' %}" class="btn btn-secondary">Log in</a> {% endcomment %}
       </div>
     </div>
     <div class="row text-black">

@@ -160,7 +160,7 @@ def newsletter_signup(request):
     return render(request, 'home.html', {'form': form})
 
 import stripe
-@login_required(login_url='login')
+@login_required(login_url='/accounts/login/')
 def getinvolved_page(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
     if request.method == 'POST':
