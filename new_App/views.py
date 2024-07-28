@@ -277,7 +277,7 @@ def stripe_webhook(request):
             user_payment.save()
                 # Create an invoice item
             stripe.InvoiceItem.create(
-                customer=session.customer,
+                customer=stripe.Customer.retrieve(session.customer).id,
                 amount=int(user_payment.amount * 100),
                 currency='cad',
                 description=f"{user_payment.donation_type.capitalize()} Donation",
@@ -285,7 +285,7 @@ def stripe_webhook(request):
 
             # Create and finalize the invoice
             invoice = stripe.Invoice.create(
-                customer=session.customer.id,
+                customer=session.customer,
                 collection_method='send_invoice',  # Auto-finalize this draft after ~1 hour
             )
             # Finalize and send the invoice
