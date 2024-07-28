@@ -174,9 +174,10 @@ def getinvolved_page(request):
     if request.method == 'POST':
         donation_amount = int(request.POST.get('donation_amount')) * 100
         donation_type = request.POST.get('donation_type')
+        email = request.POST.get('email')
         if donation_type == 'recurring':
             # Create a Stripe customer
-            customer = stripe.Customer.create(email=request.user.email)
+            customer = stripe.Customer.create(email=email)
             # Create a Stripe product if not already created
             product = stripe.Product.create(name='Recurring Donation')
             
