@@ -236,7 +236,7 @@ def payment_successful(request):
     customer = stripe.Customer.retrieve(session.customer)
     # Create a new UserPayment record
     user_payment = UserPayment.objects.create(
-        app_user=request.user,
+        app_user=customer.name,
         stripe_charge_id=checkout_session_id,
         amount=session.amount_total / 100,  # Convert from cents to dollars
         currency=session.currency,
