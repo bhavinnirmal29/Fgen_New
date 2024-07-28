@@ -285,12 +285,14 @@ def stripe_webhook(request):
 
             # Create and finalize the invoice
             invoice = stripe.Invoice.create(
-                customer=session.customer,
-                auto_advance=True,  # Auto-finalize this draft after ~1 hour
+                customer=session.customer.id,
+                collection_method='send_invoice',  # Auto-finalize this draft after ~1 hour
             )
-
+            # Finalize and send the invoice
+            finalized_invoice = stripe.Invoice.finalize_invoice(invoice.id)
+            
             # Send the invoice to the customer's email
-            stripe.Invoice.send_invoice(invoice.id)
+            stripe.Invoice.send_invoice(finalized_invoice.id)
         except UserPayment.DoesNotExist:
                     pass
     return HttpResponse(status=200)
