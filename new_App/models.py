@@ -65,6 +65,7 @@ class UserPayment(models.Model):
     currency = models.CharField(max_length=10, default='usd')
     payment_date = models.DateTimeField(auto_now_add=True)
     success = models.BooleanField(default=False)
+    donation_type = models.CharField(max_length=50,default="regular")
     def __str__(self):
         return f"{self.app_user.username} - {self.stripe_charge_id}"
 # @receiver(post_save, sender=User)

@@ -161,30 +161,68 @@ def newsletter_signup(request):
 
 import stripe
 @login_required(login_url='login')
-def product_page(request):
-	stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
-	if request.method == 'POST':
-		checkout_session = stripe.checkout.Session.create(
-			payment_method_types = ['card'],
-			line_items = [
-				{
-					'price': settings.PRODUCT_PRICE,
-					'quantity': 1,
-				},
-			],
-			mode = 'payment',
-			customer_creation = 'always',
-			success_url = settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}',
-			cancel_url = settings.REDIRECT_DOMAIN + '/payment_cancelled',
-		)
-		return redirect(checkout_session.url, code=303)
-	return render(request, 'product_page.html')
+def getinvolved_page(request):
+    stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
+    if request.method == 'POST':
+        donation_amount = int(request.POST.get('donation_amount')) * 100
+        donation_type = request.POST.get('donation_type')
+        if donation_type == 'recurring':
+            # Create a Stripe customer
+            customer = stripe.Customer.create(email=request.user.email)
+            # Create a Stripe product if not already created
+            product = stripe.Product.create(name='Recurring Donation')
+            
+            # Create a Stripe price object for the recurring payment
+            price = stripe.Price.create(
+                unit_amount=donation_amount,
+                currency="cad",
+                recurring={"interval": "month"},
+                product=product.id,
+            )
+            
+            # Create a Stripe checkout session for the subscription
+            checkout_session = stripe.checkout.Session.create(
+                customer=customer.id,
+                payment_method_types=['card'],
+                line_items=[
+                    {
+                        'price': price.id,
+                        'quantity': 1,
+                    },
+                ],
+                mode='subscription',
+                # customer_creation='always',
+                success_url=settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}'+f'&donation_type={donation_type}',
+                cancel_url=settings.REDIRECT_DOMAIN + '/payment_cancelled',
+            )
+        # Create a Stripe Price object
+        price = stripe.Price.create(
+            unit_amount=donation_amount,
+            currency="cad",
+            product=settings.PRODUCT_ID,  # Ensure you have a product created in Stripe and its ID in settings
+        )
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types = ['card'],
+            line_items = [
+                {
+                    'price': price.id,
+                    'quantity': 1,
+                },
+            ],
+            mode = 'payment',
+            customer_creation = 'always',
+            success_url = settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}'+f'&donation_type={donation_type}',
+            cancel_url = settings.REDIRECT_DOMAIN + '/payment_cancelled',
+        )
+        return redirect(checkout_session.url, code=303)
+    return render(request, 'getinvolved.html')
 
 from .models import UserPayment
 ## use Stripe dummy card: 4242 4242 4242 4242
 def payment_successful(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
     checkout_session_id = request.GET.get('session_id', None)
+    donation_type = request.GET.get('donation_type', None)
     session = stripe.checkout.Session.retrieve(checkout_session_id)
     customer = stripe.Customer.retrieve(session.customer)
     # Create a new UserPayment record
@@ -193,7 +231,9 @@ def payment_successful(request):
         stripe_charge_id=checkout_session_id,
         amount=session.amount_total / 100,  # Convert from cents to dollars
         currency=session.currency,
-        success=True
+        donation_type=donation_type
+        # success=True,
+        
     )
     return render(request, 'payment_successful.html', {'customer': customer})
 
@@ -201,8 +241,7 @@ def payment_successful(request):
 def payment_cancelled(request):
 	stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
 	return render(request, 'payment_cancelled.html')
-
-
+    
 @csrf_exempt
 def stripe_webhook(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
@@ -227,8 +266,24 @@ def stripe_webhook(request):
             user_payment = UserPayment.objects.get(stripe_charge_id=session_id)
             user_payment.success = True
             user_payment.save()
+                # Create an invoice item
+            stripe.InvoiceItem.create(
+                customer=session.customer,
+                amount=user_payment.amount,
+                currency='cad',
+                description=f"{user_payment.donation_type.capitalize()} Donation",
+            )
+
+            # Create and finalize the invoice
+            invoice = stripe.Invoice.create(
+                customer=session.customer,
+                auto_advance=True,  # Auto-finalize this draft after ~1 hour
+            )
+
+            # Send the invoice to the customer's email
+            stripe.Invoice.send_invoice(invoice.id)
         except UserPayment.DoesNotExist:
-            pass
+                    pass
     return HttpResponse(status=200)
 
 

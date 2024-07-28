@@ -25,21 +25,25 @@
         <h2>Donate</h2>
         <p>Various donation options (one-time, recurring, sponsorship)</p>
         <h3>Secure Online Donation Form</h3>
-        <form>
+        {% comment %} {% if user.is_authenticated %} {% endcomment %}
+        <form enctype="multipart/form-data" method="post" action="{% url 'get_involved' %}">
+          {% csrf_token %}
           <div class="form-group">
             <label for="donationAmount">Donation Amount:</label>
-            <input type="number" class="form-control" id="donationAmount">
+            <input type="number" class="form-control" id="donationAmount" name="donation_amount">
           </div>
           <div class="form-group">
             <label for="donationType">Donation Type:</label>
-            <select class="form-control" id="donationType">
-              <option>One-time</option>
-              <option>Recurring</option>
-              <option>Sponsorship</option>
+            <select class="form-control" id="donationType" name="donation_type">
+              <option value="one_time">One-time</option>
+              <option value="recurring">Recurring</option>
+              <option value="sponsorship">Sponsorship</option>
             </select>
           </div>
           <button type="submit" class="btn btn-success btn-success-getinvolved">Donate</button>
         </form>
+        {% comment %} {% else %}
+      <h2>You're not logged in...</h2><a href="{% url 'login' %}" class="btn btn-secondary">Log in</a> {% endcomment %}
       </div>
     </div>
     <div class="row text-black">

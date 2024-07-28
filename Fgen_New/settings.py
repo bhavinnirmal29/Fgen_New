@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-okes%*4du!r7dwy5_5tq$vpgjhlm9gs*ptdo84d_gw^l-lfph$"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["fgen-71037e60626c.herokuapp.com","127.0.0.1","www.fgen.ca","fgen.ca"]
+ALLOWED_HOSTS = ["fgen-71037e60626c.herokuapp.com","127.0.0.1","www.fgen.ca","fgen.ca","*"]#remove the * from here.
 
 # Application definition
 
@@ -170,8 +170,8 @@ DEFAULT_FROM_EMAIL = 'tatvajoshi2000@gmail.com'
 STRIPE_PUBLIC_KEY_TEST ="pk_test_51NNQNSFQ7fQ9eiOGecD4H58qV13FiZZlelEmNnmxoqWxXpFuASZLQ710geQOzc39pdrrMLJ4NRlb0nnToTPedVxF006dpnwdKT" #os.getenv('STRIPE_PUBLIC_KEY_TEST')
 STRIPE_SECRET_KEY_TEST ="sk_test_51NNQNSFQ7fQ9eiOGNU27BidquzSvmBAC4FztWt8jroHqHQ2QyTwCx7BBpjksldu7ZBnxRazcOWCVVcOZExG0Ajvt00rmvFR3A5" #os.getenv('STRIPE_SECRET_KEY_TEST')
 STRIPE_WEBHOOK_SECRET_TEST ="whsec_c3f5766c53f559522d1498f3e5ee3e7d3745179fad4d38e2cec694685faca7ff" #os.getenv('STRIPE_WEBHOOK_SECRET_TEST')
-PRODUCT_PRICE = "price_1Pf4yoFQ7fQ9eiOGaulD4Gdx"#os.getenv('PRODUCT_PRICE')
-
+PRODUCT_PRICE = "price_1PhLSdFQ7fQ9eiOG4z1Rngtx"#os.getenv('PRODUCT_PRICE')
+PRODUCT_ID='prod_QYSNWnTHKR94q7'
 REDIRECT_DOMAIN = 'http://127.0.0.1:8000'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
