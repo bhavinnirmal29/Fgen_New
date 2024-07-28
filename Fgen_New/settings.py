@@ -172,6 +172,6 @@ STRIPE_SECRET_KEY_TEST ="sk_test_51NNQNSFQ7fQ9eiOGNU27BidquzSvmBAC4FztWt8jroHqHQ
 STRIPE_WEBHOOK_SECRET_TEST ="whsec_c3f5766c53f559522d1498f3e5ee3e7d3745179fad4d38e2cec694685faca7ff" #os.getenv('STRIPE_WEBHOOK_SECRET_TEST')
 PRODUCT_PRICE = "price_1PhLSdFQ7fQ9eiOG4z1Rngtx"#os.getenv('PRODUCT_PRICE')
 PRODUCT_ID='prod_QYSNWnTHKR94q7'
-REDIRECT_DOMAIN = 'https://fgen.ca'
+REDIRECT_DOMAIN = 'fgen.ca'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
