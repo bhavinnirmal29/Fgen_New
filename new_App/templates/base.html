@@ -115,7 +115,7 @@
                     <a class="nav-link {% if active_page == 'events' %}active{% endif %}" href="{% url 'events' %}">Events</a>
                 </li>
             </ul>
-            <ul class="navbar-nav">
+            {% comment %} <ul class="navbar-nav">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
@@ -128,13 +128,7 @@
                         <a class="nav-link" href="{% url 'account_signup' %}">Register</a>
                     </li>
                 {% endif %}
-                {% comment %} <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
-                </li> {% endcomment %}
-            </ul>
+            </ul> {% endcomment %}
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
