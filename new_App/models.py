@@ -59,8 +59,9 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save   
 
 class UserPayment(models.Model):
-    app_user = models.ForeignKey(User, on_delete=models.CASCADE)
-    stripe_charge_id = models.CharField(max_length=500,default="")
+    # app_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    app_user = models.EmailField()
+    stripe_charge_id = models.CharField(max_length=500,default="", unique=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2,default=0)
     currency = models.CharField(max_length=10, default='usd')
     payment_date = models.DateTimeField(auto_now_add=True)

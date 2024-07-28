@@ -201,7 +201,7 @@ def getinvolved_page(request):
                 ],
                 mode='subscription',
                 # customer_creation='always',
-                success_url=settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}'+f'&donation_type={donation_type}',
+                success_url=settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}'+f'&donation_type={donation_type}'+f'&email={email}',
                 cancel_url=settings.REDIRECT_DOMAIN + '/payment_cancelled',
             )
         # Create a Stripe Price object
@@ -220,7 +220,7 @@ def getinvolved_page(request):
             ],
             mode = 'payment',
             customer_creation = 'always',
-            success_url = settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}'+f'&donation_type={donation_type}',
+            success_url = settings.REDIRECT_DOMAIN + '/payment_successful?session_id={CHECKOUT_SESSION_ID}'+f'&donation_type={donation_type}'+f'&email={email}',
             cancel_url = settings.REDIRECT_DOMAIN + '/payment_cancelled',
         )
         return redirect(checkout_session.url, code=303)
@@ -232,11 +232,12 @@ def payment_successful(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY_TEST
     checkout_session_id = request.GET.get('session_id', None)
     donation_type = request.GET.get('donation_type', None)
+    email = request.GET.get('email', None)
     session = stripe.checkout.Session.retrieve(checkout_session_id)
     customer = stripe.Customer.retrieve(session.customer)
     # Create a new UserPayment record
     user_payment = UserPayment.objects.create(
-        app_user=customer.name,
+        app_user=email,
         stripe_charge_id=checkout_session_id,
         amount=session.amount_total / 100,  # Convert from cents to dollars
         currency=session.currency,
