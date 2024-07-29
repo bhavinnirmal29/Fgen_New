@@ -90,7 +90,10 @@
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-fixed-top navbar-dark bg-purple">
-        <a class="navbar-brand" href="{% url 'home' %}" style="font-size:22px;">FGEN</a>
+        <a class="navbar-brand" href="{% url 'home' %}" style="font-size:22px;">
+            <img src="/static/assets/images/FgenLogo1.png" height="70px" width="110px" alt="FGEN">
+            {% comment %} <span style="font-size: 22px;"></span> {% endcomment %}
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

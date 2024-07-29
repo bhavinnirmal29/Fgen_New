@@ -339,7 +339,7 @@ a {
 /* Jumbotron Custom CSS */
 
 .jumbotron-custom {
-    background: linear-gradient(to right, #d4d0bd, #eed87e);
+    background: linear-gradient(to right, #fddb3a, #f7c600);
     color: white;
     padding: 2rem 1rem;
     border-radius: 8px;
