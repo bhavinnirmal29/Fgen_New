@@ -60,7 +60,7 @@ def contact_us(request):
             message = f"Name: {contact_message.name}\nEmail: {contact_message.email}\nMessage: {contact_message.message}"
             print(message)
             from_email = settings.DEFAULT_FROM_EMAIL
-            recipient_list = ['tatvajoshi0@gmail.com']  # Add email addresses of special users
+            recipient_list = [contact_message.email]  # Add email addresses of special users
             send_mail("A New Inquiry", message, from_email, recipient_list)
             messages.success(request, 'Your message has been sent successfully!')
             return redirect('contact_success')
