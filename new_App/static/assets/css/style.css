@@ -354,3 +354,51 @@ a {
 .jumbotron-custom:hover {
     transform: scale(1.05);
 }
+
+/* Error 404 CSS */
+
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    min-height: 100vh;
+}
+.card-error {
+    background-color: #495057;
+    border-radius: 20px;
+    border: none;
+}
+.card-body-error h1 {
+    font-size: 5em;
+}
+.card-body-error h2 {
+    font-size: 2em;
+}
+.card-body-error p {
+    font-size: 1.2em;
+}
+.home-button-error {
+    margin-top: 20px;
+}
+@keyframes shooting-star {
+    0% {
+        top: 0;
+        left: 0;
+        opacity: 1;
+    }
+    100% {
+        top: 100px;
+        left: 100px;
+        opacity: 0;
+    }
+}
+.star-error {
+    width: 5px;
+    height: 5px;
+    background: rgb(234, 84, 84);
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: shooting-star 1.5s infinite ease-in-out;
+}

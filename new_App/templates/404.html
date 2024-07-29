@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static%}
+{% block title %}404-Page Not Found!{% endblock %}
+
+{% block content %}
+<div class="container error-container">
+    <div class="card card-error text-center" style="margin-top:40px;">
+        <div class="card-body card-body-error">
+            <div class="star-error"></div>
+            <h1 class="display-1 text-danger">404</h1>
+            <h2>Oops! Page Not Found</h2>
+            <p>Sorry, but the page you were looking for could not be found.</p>
+            <a href="{% url 'home' %}" class="btn btn-primary home-button">Go Home</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
