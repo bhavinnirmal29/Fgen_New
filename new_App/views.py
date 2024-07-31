@@ -2,7 +2,7 @@ from django.utils import timezone
 from django.shortcuts import render,redirect
 from .forms import ContactForm
 from .forms import RegistrationForm, EventForm
-from .models import Programs, Leadership, Event, WebData
+from .models import Programs, Leadership, Event, WebData, Testimonials
 from django.contrib import messages
 from django.conf import settings
 from django.core.mail import send_mail
@@ -20,7 +20,12 @@ def custom_page_not_found_view(request, exception):
 
 # Home View
 def home(request):
-    return render(request, 'home.html', {'active_page': 'home'})
+    testimonial_data = Testimonials.objects.all()
+    context = {
+        'testimonial_data': testimonial_data,
+        'active_page': 'home'
+    }
+    return render(request, 'home.html', context)
 
 # About Us View
 def about_us(request):
@@ -60,7 +65,7 @@ def contact_us(request):
             message = f"Name: {contact_message.name}\nEmail: {contact_message.email}\nMessage: {contact_message.message}"
             print(message)
             from_email = settings.DEFAULT_FROM_EMAIL
-            recipient_list = ['b.akintunde@share.epsb.ca']  # Add email addresses of special users
+            recipient_list = ['info@fgen.ca']  # Add email addresses of special users
             send_mail("A New Inquiry", message, from_email, recipient_list)
             messages.success(request, 'Your message has been sent successfully!')
             return redirect('contact_success')

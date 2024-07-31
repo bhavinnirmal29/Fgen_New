@@ -88,7 +88,7 @@
     <h2 class="section-title text-center">Vision & Mission</h2>
     <div class="row">
         <div class="col-md-12 col-sm-12, col-lg-12">
-            <p>At FGEN (Future Generation), our mission is to educate, engage, and empower the upcoming generation with comprehensive knowledge about the brain, fostering a community of informed and inspired leaders. We strive to spread awareness about the intricacies of neuroscience and its impact on our daily lives, nurturing curiosity and promoting critical thinking. Through education, outreach, and innovative initiatives, FGEN aims to equip future leaders with the understanding and skills necessary to harness the power of the brain, driving progress and positive change in society. Together, we envision a world where knowledge of the brain fuels leadership, empathy, and innovation.
+            <p class="text-justify">At FGEN (Future Generation), our mission is to educate, engage, and empower the upcoming generation with comprehensive knowledge about the brain, fostering a community of informed and inspired leaders. We strive to spread awareness about the intricacies of neuroscience and its impact on our daily lives, nurturing curiosity and promoting critical thinking. Through education, outreach, and innovative initiatives, FGEN aims to equip future leaders with the understanding and skills necessary to harness the power of the brain, driving progress and positive change in society. Together, we envision a world where knowledge of the brain fuels leadership, empathy, and innovation.
             </p>
         </div>
     </div>
@@ -137,6 +137,7 @@
 <section id="testimonials" class="testimonial text-center">
     <div class="container">
         <h2 class="section-title">Testimonials</h2>
+        {% for t in testimonial_data %}
         <blockquote class="blockquote">
             <p class="mb-0">"FGEN's presentations are incredibly informative and engaging. I've learned so much about the brain and its functions!"</p>
             <footer class="blockquote-footer author">Jane Doe, Student</footer>
@@ -145,6 +146,7 @@
             <p class="mb-0">"The FGEN team is doing an amazing job raising awareness about neurodegenerative diseases. Truly inspiring!"</p>
             <footer class="blockquote-footer author">John Smith, Parent</footer>
         </blockquote>
+        {% endfor %}
     </div>
 </section>
 </div>

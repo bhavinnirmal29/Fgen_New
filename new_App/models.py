@@ -1,3 +1,4 @@
+import os
 from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
@@ -10,7 +11,10 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.email})"
-    
+
+def upload_to(instance, filename):
+    return os.path.join('new_App/static/assets/images/', filename)
+
 class Programs(models.Model):
     p_name = models.CharField(max_length=100)
     p_description = models.CharField(max_length=200)
@@ -24,13 +28,20 @@ class Programs(models.Model):
 class Leadership(models.Model):
     l_name = models.CharField(max_length=100)
     l_description = models.CharField(max_length=1000)
-    l_imagename = models.ImageField(upload_to='static/assets/images/')
+    l_imagename = models.ImageField(upload_to=upload_to)
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return f"{self.l_name} - ({self.l_description})"
     
+
+class Testimonials(models.Model):
+    t_name = models.CharField(max_length=100)
+    t_description = models.CharField(max_length=1000)
+    created_at = models.DateTimeField(auto_now_add=True)
     
+    def __str__(self):
+        return f"{self.t_name} - ({self.t_description})" 
     
 from django.db import models
 

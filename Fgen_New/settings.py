@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-okes%*4du!r7dwy5_5tq$vpgjhlm9gs*ptdo84d_gw^l-lfph$"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["fgen-71037e60626c.herokuapp.com","127.0.0.1","www.fgen.ca","fgen.ca"]#remove the * from here.
 
@@ -158,12 +158,12 @@ LOGIN_URL = '/accounts/login/'
 ACCOUNT_SIGNUP_REDIRECT_URL = "/accounts/login/"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.office365.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'tatvajoshi2000@gmail.com'
-EMAIL_HOST_PASSWORD = 'yryo hqcm xomz dffn'
-DEFAULT_FROM_EMAIL = 'tatvajoshi2000@gmail.com'
+EMAIL_HOST_USER = 'info@fgen.ca'
+EMAIL_HOST_PASSWORD = 'bwpcjrnwcfwswgbz'
+DEFAULT_FROM_EMAIL = 'info@fgen.ca'
 
 
 ## Stripe

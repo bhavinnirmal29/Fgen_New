@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ContactMessage, Programs, Leadership,NewsletterSubscriber,PDFDocument,UserPayment, Event, WebData
+from .models import ContactMessage, Programs, Leadership,NewsletterSubscriber,PDFDocument,UserPayment, Event, WebData, Testimonials
 
 # Register your models here.
 
@@ -9,7 +9,7 @@ admin.site.register(Leadership)
 admin.site.register(UserPayment)
 admin.site.register(Event)
 admin.site.register(WebData)
-
+admin.site.register(Testimonials)
 @admin.register(PDFDocument)
 class PDFDocumentAdmin(admin.ModelAdmin):
     list_display = ('title', 'uploaded_at')

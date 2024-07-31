@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}About Us{% endblock %}
-
+{% load custom_filters %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +58,7 @@
             <div class="card card-about border-0 shadow-lg h-100">
                 <div class="card-body card-about-body">
                     <h2 class="card-title text-center">Our Vision</h2>
-                    <p class="card-text">{{vision.description_text}}</p>
+                    <p class="card-text text-justify">{{vision.description_text}}</p>
                 </div>
             </div>
         </div>
@@ -66,7 +66,7 @@
             <div class="card card-about border-0 shadow-lg h-100">
                 <div class="card-body card-about-body">
                     <h2 class="card-title text-center">Our Mission</h2>
-                    <p class="card-text">{{mission.description_text}}</p>
+                    <p class="card-text text-justify">{{mission.description_text}}</p>
                 </div>
             </div>
         </div>
@@ -76,7 +76,7 @@
             <div class="card card-about border-0 shadow-lg h-100">
                 <div class="card-body card-about-body">
                     <h2 class="card-title text-center">About Us</h2>
-                    <p class="card-text">
+                    <p class="card-text text-justify">
                         {{about.description_text}}
                     </p>
                 </div>
@@ -93,10 +93,10 @@
             {% for l in leadership %}
             <div class="col-md-4 col-sm-12 col-lg-4">
                 <div class="card card-custom program-card shadow-lg">
-                    <img src="{{l.l_imagename}}" height=350 width=250 class="card-img-top" alt="Card Image">
+                    <img src="{{l.l_imagename.url|trim_path}}" height=350 width=250 class="card-img-top" alt="Card Image">
                     <div class="card-body">
                         <h5 class="card-title">{{l.l_name}}</h5>
-                        <p class="card-text">{{l.l_description}}</p>
+                        <p class="card-text text-justify">{{l.l_description}}</p>
                     </div>
                 </div>
                 &nbsp;
