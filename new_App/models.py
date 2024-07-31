@@ -23,8 +23,8 @@ class Programs(models.Model):
     
 class Leadership(models.Model):
     l_name = models.CharField(max_length=100)
-    l_description = models.CharField(max_length=200)
-    l_imagename = models.CharField(max_length=100)
+    l_description = models.CharField(max_length=1000)
+    l_imagename = models.ImageField(upload_to='static/assets/images/')
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
