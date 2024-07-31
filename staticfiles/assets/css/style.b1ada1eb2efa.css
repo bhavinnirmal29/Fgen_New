@@ -184,12 +184,6 @@ h1.display-4, h2.card-title {
     transform: scale(1.05);
 }
 
-.program-card-style{
-    background: rgb(148,146, 13);
-    color:white;
-    font-weight: bold;
-}
-
 
 .wrapper>* {
     flex: 0 0 auto;
@@ -330,31 +324,22 @@ a {
     padding-left: 20px;
 }
 .benefit-item {
-    background-color: #ffffff;
+    background: #0d7ef0;
     margin-bottom: 10px;
     padding: 15px;
-    color:black;
+    color:white;
     border-radius: 5px;
-    transition: background-color 0.5s ease;
+    transition: background 0.3s ease;
 }
 .benefit-item:hover {
     background: rgb(148,146, 13);
-    color:white;
-    font-weight: bold;
 }
-
-.impact-style{
-    background: rgb(148,146, 13);
-    color:white;
-    font-weight: bold;
-}
-
 
 
 /* Jumbotron Custom CSS */
 
 .jumbotron-custom {
-    background: rgb(148,146, 13);
+    background: linear-gradient(to right, #e2ca51, #edc528);
     color: white;
     padding: 2rem 1rem;
     border-radius: 8px;

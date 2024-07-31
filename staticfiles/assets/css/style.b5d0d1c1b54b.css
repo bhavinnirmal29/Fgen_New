@@ -184,12 +184,6 @@ h1.display-4, h2.card-title {
     transform: scale(1.05);
 }
 
-.program-card-style{
-    background: rgb(148,146, 13);
-    color:white;
-    font-weight: bold;
-}
-
 
 .wrapper>* {
     flex: 0 0 auto;
@@ -341,14 +335,8 @@ a {
     background: rgb(148,146, 13);
     color:white;
     font-weight: bold;
+    animation: ;
 }
-
-.impact-style{
-    background: rgb(148,146, 13);
-    color:white;
-    font-weight: bold;
-}
-
 
 
 /* Jumbotron Custom CSS */
