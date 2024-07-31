@@ -139,12 +139,8 @@
         <h2 class="section-title">Testimonials</h2>
         {% for t in testimonial_data %}
         <blockquote class="blockquote">
-            <p class="mb-0">"FGEN's presentations are incredibly informative and engaging. I've learned so much about the brain and its functions!"</p>
-            <footer class="blockquote-footer author">Jane Doe, Student</footer>
-        </blockquote>
-        <blockquote class="blockquote">
-            <p class="mb-0">"The FGEN team is doing an amazing job raising awareness about neurodegenerative diseases. Truly inspiring!"</p>
-            <footer class="blockquote-footer author">John Smith, Parent</footer>
+            <p class="mb-0">"{{t.t_description}}"</p>
+            <footer class="blockquote-footer author">{{t.t_name}}</footer>
         </blockquote>
         {% endfor %}
     </div>
