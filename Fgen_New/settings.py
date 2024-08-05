@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'django_extensions',
     "crispy_forms",
     "crispy_bootstrap4",
     "new_App",
@@ -175,3 +176,16 @@ PRODUCT_ID='prod_QYSNWnTHKR94q7'
 REDIRECT_DOMAIN = 'https://www.fgen.ca'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Ensure cookies are only sent over HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# Prevent JavaScript from accessing the cookies
+SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = True
+
+# Other related settings
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+CSRF_COOKIE_NAME = 'csrftoken'
+SESSION_COOKIE_NAME = 'sessionid'
