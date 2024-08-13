@@ -21,7 +21,7 @@
   </div>
 
   <!-- Donate Section -->
-    <div class="row text-white">
+    {% comment %} <div class="row text-white">
       <div class="col-md-12 col-sm-12 col-lg-12">
         <h2>Donate</h2>
         <p>Various donation options (one-time, recurring, sponsorship)</p>
@@ -47,15 +47,14 @@
           <button type="submit" class="btn btn-success btn-success-getinvolved">Donate</button>
         </form>
       </div>
-    </div>
-    <div class="row text-black">
+    </div> {% endcomment %}
+    {% comment %} <div class="row text-black">
       <div class="col-md-12 col-sm-12 col-lg-12">
         <div class="card impact-card">
           <div class="card-header impact-style">
               <h4>Impact of Donations</h4>
           </div>
           <div class="card-body text-black">
-              {% comment %} <h4>Impact of Donations!</h4> {% endcomment %}
               {% for i in impact_data %}
               <div class="example mt-3">
                   <p> - {{i.description_text}}</p>
@@ -64,7 +63,7 @@
           </div>
       </div>
       </div>
-    </div>
+    </div> {% endcomment %}
   </div>
 </div>
 {% endblock %}
