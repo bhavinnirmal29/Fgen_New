@@ -1,8 +1,14 @@
 from django.contrib import admin
 from .models import ContactMessage, Programs, Leadership,NewsletterSubscriber,PDFDocument,UserPayment, Event, WebData, Testimonials
-
+from .models import Event, EventImage
 # Register your models here.
+class EventImageInline(admin.TabularInline):
+    model = EventImage
+    extra = 1
 
+class EventAdmin(admin.ModelAdmin):
+    inlines = [EventImageInline]
+    
 admin.site.register(ContactMessage)
 admin.site.register(Programs)
 admin.site.register(Leadership)
@@ -10,6 +16,7 @@ admin.site.register(UserPayment)
 admin.site.register(Event)
 admin.site.register(WebData)
 admin.site.register(Testimonials)
+admin.site.register(EventImage)
 @admin.register(PDFDocument)
 class PDFDocumentAdmin(admin.ModelAdmin):
     list_display = ('title', 'uploaded_at')
@@ -23,3 +30,5 @@ class NewsletterSubscriberAdmin(admin.ModelAdmin):
     search_fields = ('email',)
 
 
+
+    

@@ -2,7 +2,7 @@ from django.utils import timezone
 from django.shortcuts import render,redirect
 from .forms import ContactForm
 from .forms import RegistrationForm, EventForm
-from .models import Programs, Leadership, Event, WebData, Testimonials
+from .models import Programs, Leadership, Event, WebData, Testimonials, EventImage
 from django.contrib import messages
 from django.conf import settings
 from django.core.mail import send_mail
@@ -94,6 +94,10 @@ def programs(request):
 #     return render(request, 'getinvolved.html', context)
 
 def events(request):
+    images = EventImage.objects.all()
+    paginator = Paginator(images, 6)  # Show 6 images per page
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
     upcoming_events = Event.objects.filter(event_date__gte=timezone.now()).order_by('event_date')
     past_events = Event.objects.filter(event_date__lt=timezone.now()).order_by('-event_date')
 
@@ -120,7 +124,8 @@ def events(request):
     context = {
         'upcoming_events': upcoming_events,
         'past_events': past_events,
-        'active_page':'events'
+        'active_page':'events',
+        'page_obj': page_obj,
     }
 
     return render(request, 'events.html', context)

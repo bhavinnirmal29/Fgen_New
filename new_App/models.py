@@ -98,7 +98,14 @@ class Event(models.Model):
 
     def is_past_event(self):
         return self.event_date < timezone.now()
-    
+
+class EventImage(models.Model):
+    image = models.ImageField(upload_to=upload_to)
+    description = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return f"Image for {self.description}"
+  
 class WebData(models.Model):
     page_name = models.CharField(max_length=255)
     title = models.CharField(max_length=200)

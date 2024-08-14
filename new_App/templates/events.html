@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static%}
 {% block title %}Events{% endblock %}
-
+{% load custom_filters %}
 {% block content %}
 {% comment %} <div class="container mt-5 text-white">
     <h2>Upcoming Events</h2>
@@ -116,6 +116,51 @@
         </nav>
     {% else %}
         <p>No past events.</p>
+    {% endif %}
+</div>
+
+<div class="container mt-5">
+    <h2 class="text-white">Image Gallery</h2>
+    {% if page_obj.object_list %}
+        <div class="row">
+            {% for image in page_obj.object_list %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <img src="{{ image.image.url|trim_path }}" class="card-img-top img-fluid" alt="{{ image.description }}">
+                        <div class="card-body">
+                            <p class="card-text text-black">{{ image.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <nav aria-label="Image gallery pagination">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% else %}
+        <p>No images available.</p>
     {% endif %}
 </div>
 {% endblock %}
