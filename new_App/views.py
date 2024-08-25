@@ -95,12 +95,17 @@ def programs(request):
 
 def events(request):
     images = EventImage.objects.all()
-    paginator = Paginator(images, 6)  # Show 6 images per page
-    page_number = request.GET.get('page', 1)
-    page_obj = paginator.get_page(page_number)
+    if images:
+        paginator = Paginator(images, 6)  # Show 6 images per page
+        page_number = request.GET.get('page', 1)
+        page_obj = paginator.get_page(page_number)
+    else:
+        page_obj = None
+
     upcoming_events = Event.objects.filter(event_date__gte=timezone.now()).order_by('event_date')
     past_events = Event.objects.filter(event_date__lt=timezone.now()).order_by('-event_date')
-
+    print(upcoming_events)
+    print(past_events)
     # Pagination for upcoming events
     paginator_upcoming = Paginator(upcoming_events, 5)  # Show 5 events per page
     page = request.GET.get('page_upcoming')

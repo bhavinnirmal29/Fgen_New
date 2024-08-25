@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-okes%*4du!r7dwy5_5tq$vpgjhlm9gs*ptdo84d_gw^l-lfph$"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["fgen-71037e60626c.herokuapp.com","127.0.0.1","www.fgen.ca","fgen.ca"]#remove the * from here.
 
@@ -79,18 +79,23 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "Fgen_New.wsgi.application"
-
+import dj_database_url
+import os
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    'default': dj_database_url.config(
+        default='postgres://uc8bdr2fg33rn6:p376745114295f79b372a7a631410db0c9e81814862e9b59f654a0fd9695a2152@c9mq4861d16jlm.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/dfe673gjjcluri'
+    )
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
