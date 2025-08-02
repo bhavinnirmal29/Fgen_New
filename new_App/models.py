@@ -100,6 +100,7 @@ class Event(models.Model):
         return self.event_date < timezone.now()
 
 class EventImage(models.Model):
+    id = models.AutoField(primary_key=True)
     image = models.ImageField(upload_to=upload_to)
     description = models.CharField(max_length=255, blank=True)
 
