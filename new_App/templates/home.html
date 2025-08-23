@@ -46,6 +46,7 @@
 
     .section-title {
         margin: 50px 0 20px;
+        color: white;
     }
     .container{
         border-radius:20px;
@@ -60,6 +61,169 @@
         font-weight: bold;
         text-align: center;
         margin-top: 20%;
+    }
+    
+    /* YouTube Carousel Styles */
+    .youtube-carousel-container {
+        position: relative;
+        max-width: 100%;
+        overflow: hidden;
+        padding: 0 40px;
+    }
+    
+    .youtube-carousel {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        gap: 20px;
+    }
+    
+    .youtube-carousel-item {
+        flex: 0 0 300px;
+        min-width: 300px;
+    }
+    
+    .video-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+    }
+    
+    .video-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .video-thumbnail {
+        position: relative;
+        height: 180px;
+        overflow: hidden;
+    }
+    
+    .video-thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    
+    .video-card:hover .video-thumbnail img {
+        transform: scale(1.05);
+    }
+    
+    .play-button-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 0, 0, 0.8);
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        opacity: 0;
+    }
+    
+    .video-card:hover .play-button-overlay {
+        opacity: 1;
+    }
+    
+    .play-button-overlay:hover {
+        background: rgba(255, 0, 0, 1);
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+    
+    .play-button-overlay i {
+        color: white;
+        font-size: 24px;
+    }
+    
+    .video-info {
+        padding: 15px;
+    }
+    
+    .video-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #333;
+        line-height: 1.3;
+    }
+    
+    .video-description {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.4;
+        margin-bottom: 0;
+    }
+    
+    .carousel-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 10;
+    }
+    
+    .carousel-nav:hover {
+        background: rgba(0, 0, 0, 0.9);
+        transform: translateY(-50%) scale(1.1);
+    }
+    
+    .carousel-nav.prev {
+        left: 0;
+    }
+    
+    .carousel-nav.next {
+        right: 0;
+    }
+    
+    .carousel-nav i {
+        font-size: 16px;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .youtube-carousel-item {
+            flex: 0 0 250px;
+            min-width: 250px;
+        }
+        
+        .youtube-carousel-container {
+            padding: 0 30px;
+        }
+        
+        .carousel-nav {
+            width: 35px;
+            height: 35px;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .youtube-carousel-item {
+            flex: 0 0 200px;
+            min-width: 200px;
+        }
+        
+        .youtube-carousel-container {
+            padding: 0 25px;
+        }
     }
     
 </style>
@@ -146,5 +310,211 @@
     </div>
 </section>
 </div>
+
+<!-- YouTube Videos Carousel Section -->
+{% if youtube_videos %}
+<section id="youtube-videos" class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="section-title text-center">Featured Videos</h2>
+            <p class="text-center text-muted mb-4">Watch our latest content and learn more about FGEN</p>
+        </div>
+    </div>
+    
+    <div class="youtube-carousel-container">
+        <div class="youtube-carousel" id="youtubeCarousel">
+            {% for video in youtube_videos %}
+            <div class="youtube-carousel-item">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="{{ video.get_thumbnail_url }}" alt="{{ video.title }}" class="img-fluid">
+                        <div class="play-button-overlay" onclick="openVideoModal('{{ video.get_embed_url }}', '{{ video.title }}')">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h5 class="video-title">{{ video.title }}</h5>
+                        {% if video.description %}
+                        <p class="video-description">{{ video.description|truncatewords:15 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Navigation arrows -->
+        <button class="carousel-nav prev" onclick="moveCarousel(-1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="carousel-nav next" onclick="moveCarousel(1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+</section>
+
+<!-- Video Modal -->
+<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="videoModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe id="videoIframe" class="embed-responsive-item" src="" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<script>
+// YouTube Carousel Functionality
+let currentPosition = 0;
+const carousel = document.getElementById('youtubeCarousel');
+const items = document.querySelectorAll('.youtube-carousel-item');
+const itemWidth = 320; // 300px item + 20px gap
+const visibleItems = Math.floor(carousel.offsetWidth / itemWidth);
+const maxPosition = Math.max(0, items.length - visibleItems);
+
+function moveCarousel(direction) {
+    currentPosition += direction;
+    
+    // Ensure we don't go beyond bounds
+    if (currentPosition < 0) {
+        currentPosition = 0;
+    } else if (currentPosition > maxPosition) {
+        currentPosition = maxPosition;
+    }
+    
+    const translateX = -currentPosition * itemWidth;
+    carousel.style.transform = `translateX(${translateX}px)`;
+    
+    // Update navigation button states
+    updateNavigationButtons();
+}
+
+function updateNavigationButtons() {
+    const prevBtn = document.querySelector('.carousel-nav.prev');
+    const nextBtn = document.querySelector('.carousel-nav.next');
+    
+    if (prevBtn) prevBtn.style.opacity = currentPosition <= 0 ? '0.5' : '1';
+    if (nextBtn) nextBtn.style.opacity = currentPosition >= maxPosition ? '0.5' : '1';
+}
+
+function openVideoModal(embedUrl, title) {
+    const modal = document.getElementById('videoModal');
+    const modalTitle = document.getElementById('videoModalLabel');
+    const videoIframe = document.getElementById('videoIframe');
+    
+    modalTitle.textContent = title;
+    videoIframe.src = embedUrl;
+    
+    // Use Bootstrap modal if available, otherwise show/hide manually
+    if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+        const bsModal = new bootstrap.Modal(modal);
+        bsModal.show();
+    } else {
+        modal.style.display = 'block';
+        modal.classList.add('show');
+    }
+}
+
+// Close modal when clicking outside or on close button
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('videoModal');
+    const closeBtn = modal.querySelector('.close');
+    
+    // Close modal when clicking close button
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            closeVideoModal();
+        });
+    }
+    
+    // Close modal when clicking outside
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeVideoModal();
+        }
+    });
+    
+    // Initialize navigation buttons
+    updateNavigationButtons();
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        // Recalculate visible items and max position
+        const newVisibleItems = Math.floor(carousel.offsetWidth / itemWidth);
+        const newMaxPosition = Math.max(0, items.length - newVisibleItems);
+        
+        if (currentPosition > newMaxPosition) {
+            currentPosition = newMaxPosition;
+            const translateX = -currentPosition * itemWidth;
+            carousel.style.transform = `translateX(${translateX}px)`;
+        }
+        
+        updateNavigationButtons();
+    });
+});
+
+function closeVideoModal() {
+    const modal = document.getElementById('videoModal');
+    const videoIframe = document.getElementById('videoIframe');
+    
+    // Clear video source to stop playback
+    videoIframe.src = '';
+    
+    // Use Bootstrap modal if available, otherwise hide manually
+    if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+        const bsModal = bootstrap.Modal.getInstance(modal);
+        if (bsModal) bsModal.hide();
+    } else {
+        modal.style.display = 'none';
+        modal.classList.remove('show');
+    }
+}
+
+// Auto-scroll functionality (optional)
+let autoScrollInterval;
+
+function startAutoScroll() {
+    autoScrollInterval = setInterval(() => {
+        if (currentPosition < maxPosition) {
+            moveCarousel(1);
+        } else {
+            // Reset to beginning
+            currentPosition = 0;
+            carousel.style.transform = 'translateX(0px)';
+            updateNavigationButtons();
+        }
+    }, 5000); // Change slide every 5 seconds
+}
+
+function stopAutoScroll() {
+    if (autoScrollInterval) {
+        clearInterval(autoScrollInterval);
+    }
+}
+
+// Start auto-scroll when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    if (items.length > visibleItems) {
+        startAutoScroll();
+        
+        // Pause auto-scroll on hover
+        const carouselContainer = document.querySelector('.youtube-carousel-container');
+        if (carouselContainer) {
+            carouselContainer.addEventListener('mouseenter', stopAutoScroll);
+            carouselContainer.addEventListener('mouseleave', startAutoScroll);
+        }
+    }
+});
+</script>
 
 {% endblock %}

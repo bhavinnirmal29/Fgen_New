@@ -121,4 +121,49 @@ class WebData(models.Model):
     
     def __str__(self):
         return f"{self.page_name} - ({self.title})"
+
+class YouTubeVideo(models.Model):
+    title = models.CharField(max_length=200)
+    youtube_url = models.URLField(help_text="Enter the full YouTube URL (e.g., https://www.youtube.com/watch?v=VIDEO_ID)")
+    description = models.TextField(blank=True, help_text="Optional description of the video")
+    order = models.PositiveIntegerField(default=0, help_text="Order in which videos appear in the carousel")
+    is_active = models.BooleanField(default=True, help_text="Whether this video should be displayed")
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['order', 'created_at']
+        verbose_name = 'YouTube Video'
+        verbose_name_plural = 'YouTube Videos'
+    
+    def __str__(self):
+        return self.title
+    
+    def get_video_id(self):
+        """Extract video ID from YouTube URL"""
+        import re
+        # Handle different YouTube URL formats
+        patterns = [
+            r'(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)',
+            r'youtube\.com\/watch\?.*v=([^&\n?#]+)'
+        ]
+        
+        for pattern in patterns:
+            match = re.search(pattern, self.youtube_url)
+            if match:
+                return match.group(1)
+        return None
+    
+    def get_embed_url(self):
+        """Get the embed URL for the video"""
+        video_id = self.get_video_id()
+        if video_id:
+            return f"https://www.youtube.com/embed/{video_id}"
+        return None
+    
+    def get_thumbnail_url(self):
+        """Get the thumbnail URL for the video"""
+        video_id = self.get_video_id()
+        if video_id:
+            return f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg"
+        return None 
     

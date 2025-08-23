@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ContactMessage, Programs, Leadership,NewsletterSubscriber,PDFDocument,UserPayment, Event, WebData, Testimonials
+from .models import ContactMessage, Programs, Leadership,NewsletterSubscriber,PDFDocument,UserPayment, Event, WebData, Testimonials, YouTubeVideo
 from .models import Event, EventImage
 # Register your models here.
 class EventImageInline(admin.TabularInline):
@@ -29,6 +29,22 @@ class NewsletterSubscriberAdmin(admin.ModelAdmin):
     list_display = ('email', 'subscribed_at')
     search_fields = ('email',)
 
+@admin.register(YouTubeVideo)
+class YouTubeVideoAdmin(admin.ModelAdmin):
+    list_display = ('title', 'order', 'is_active', 'created_at')
+    list_editable = ('order', 'is_active')
+    search_fields = ('title', 'description')
+    list_filter = ('is_active', 'created_at')
+    ordering = ('order', 'created_at')
+    
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('title', 'youtube_url', 'description')
+        }),
+        ('Display Settings', {
+            'fields': ('order', 'is_active')
+        }),
+    )
 
 
     

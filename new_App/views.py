@@ -2,7 +2,7 @@ from django.utils import timezone
 from django.shortcuts import render,redirect
 from .forms import ContactForm
 from .forms import RegistrationForm, EventForm
-from .models import Programs, Leadership, Event, WebData, Testimonials, EventImage
+from .models import Programs, Leadership, Event, WebData, Testimonials, EventImage, YouTubeVideo
 from django.contrib import messages
 from django.conf import settings
 from django.core.mail import send_mail
@@ -21,8 +21,10 @@ def custom_page_not_found_view(request, exception):
 # Home View
 def home(request):
     testimonial_data = Testimonials.objects.all()
+    youtube_videos = YouTubeVideo.objects.filter(is_active=True)
     context = {
         'testimonial_data': testimonial_data,
+        'youtube_videos': youtube_videos,
         'active_page': 'home'
     }
     return render(request, 'home.html', context)
