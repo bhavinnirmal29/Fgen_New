@@ -1,0 +1,13 @@
+Django==4.2.13
+django-allauth==0.63.6
+django-crispy-forms==2.2
+crispy-bootstrap4==2024.1
+pillow==10.4.0
+stripe==10.4.0
+requests==2.32.3
+python-dotenv==1.0.1
+whitenoise==6.7.0
+django-cors-headers==4.4.0
+django-extensions==3.2.3
+dj-database-url
+gunicorn

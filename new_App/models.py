@@ -2,6 +2,7 @@ import os
 from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 # Create your models here.
 class ContactMessage(models.Model):
     name = models.CharField(max_length=100)
@@ -13,7 +14,12 @@ class ContactMessage(models.Model):
         return f"{self.name} ({self.email})"
 
 def upload_to(instance, filename):
-    return os.path.join('new_App/static/assets/images/', filename)
+    # Use media directory instead of static directory
+    return os.path.join('images/', filename)
+
+def upload_pdf_to(instance, filename):
+    # Use media directory for PDFs
+    return os.path.join('pdfs/', filename)
 
 class Programs(models.Model):
     p_name = models.CharField(max_length=100)
@@ -53,7 +59,7 @@ class NewsletterSubscriber(models.Model):
         return self.email
     
 class PDFDocument(models.Model):
-    file = models.FileField(upload_to='pdfs/')
+    file = models.FileField(upload_to=upload_pdf_to)
     title = models.CharField(max_length=255)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 

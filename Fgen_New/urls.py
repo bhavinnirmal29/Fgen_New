@@ -19,6 +19,8 @@ from django.contrib.auth import views as auth_views
 from django.urls import include, path
 from new_App import views
 from django.conf.urls import handler404
+from django.conf import settings
+from django.conf.urls.static import static
 
 handler404 = "new_App.views.custom_page_not_found_view"
 
@@ -39,3 +41,7 @@ urlpatterns = [
 	path('stripe_webhook', views.stripe_webhook, name='stripe_webhook'),
     path('events/create/', views.create_event, name='create_event'),
 ]
+
+# Serve media files during development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

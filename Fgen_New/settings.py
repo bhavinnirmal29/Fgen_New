@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     "whitenoise.runserver_nostatic",
+    'storages',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -79,22 +80,14 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "Fgen_New.wsgi.application"
-import dj_database_url
-import os
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgres://uc8bdr2fg33rn6:p376745114295f79b372a7a631410db0c9e81814862e9b59f654a0fd9695a2152@c9mq4861d16jlm.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/dfe673gjjcluri'
-    )
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
 
 # Password validation
@@ -145,6 +138,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 
+# Media files (User uploaded content)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Additional locations of static files
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
@@ -194,3 +191,40 @@ CSRF_COOKIE_HTTPONLY = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 CSRF_COOKIE_NAME = 'csrftoken'
 SESSION_COOKIE_NAME = 'sessionid'
+
+# AWS S3 Configuration for production media storage
+if not DEBUG:
+    # Option 1: Use Cloudinary (free tier available)
+    CLOUDINARY = {
+        'cloud_name': os.getenv('CLOUDINARY_CLOUD_NAME'),
+        'api_key': os.getenv('CLOUDINARY_API_KEY'),
+        'api_secret': os.getenv('CLOUDINARY_API_SECRET'),
+    }
+    
+    # Use Cloudinary for media files
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    MEDIA_URL = '/media/'
+    
+    # Option 2: Use AWS S3 (requires AWS account)
+    # AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+    # AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+    # AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+    # AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME', 'us-east-1')
+    # AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    # 
+    # # S3 static settings
+    # STATIC_LOCATION = 'static'
+    # STATIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+    # STATICFILES_STORAGE = 'new_App.storage.StaticStorage'
+    # 
+    # # S3 media settings
+    # MEDIA_LOCATION = 'media'
+    # MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
+    # DEFAULT_FILE_STORAGE = 'new_App.storage.MediaStorage'
+    # 
+    # # S3 settings
+    # AWS_S3_OBJECT_PARAMETERS = {
+    #     'CacheControl': 'max-age=86400',
+    # }
+    # AWS_DEFAULT_ACL = 'public-read'
+    # AWS_QUERYSTRING_AUTH = False
