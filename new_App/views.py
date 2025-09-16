@@ -1,3 +1,4 @@
+# Fgen_New/new_App/views.py
 from django.utils import timezone
 from django.shortcuts import render,redirect
 from .forms import ContactForm
@@ -101,10 +102,6 @@ def events(request):
         paginator = Paginator(images, 6)  # Show 6 images per page
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
-        
-        # Debug: Print image URLs
-        for img in images:
-            print(f"Image: {img.image.name}, URL: {img.image.url}, Path: {img.image.path}")
     else:
         page_obj = None
 

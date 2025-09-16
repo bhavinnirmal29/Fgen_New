@@ -5,10 +5,14 @@ import os
 class MediaStorage(S3Boto3Storage):
     location = 'media'
     file_overwrite = False
+    default_acl = 'public-read'
+    custom_domain = settings.AWS_S3_CUSTOM_DOMAIN
 
 class StaticStorage(S3Boto3Storage):
     location = 'static'
     file_overwrite = True
+    default_acl = 'public-read'
+    custom_domain = settings.AWS_S3_CUSTOM_DOMAIN
 
 def get_storage_backend():
     """

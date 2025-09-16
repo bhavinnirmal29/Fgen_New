@@ -44,8 +44,22 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     "whitenoise.runserver_nostatic",
-    'storages',
+    # Add Cloudinary apps
+    'cloudinary_storage',
+    'cloudinary',
 ]
+
+
+# Cloudinary Configuration
+# CLOUDINARY_CLOUD_NAME = "ddkeblfid"
+# CLOUDINARY_API_KEY = "761662694724374"
+# CLOUDINARY_API_SECRET = "yPNuK2ZZ4T4_QfDt1n_-_OWh7J8"
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': "ddkeblfid",
+    'API_KEY': "761662694724374",
+    'API_SECRET': "yPNuK2ZZ4T4_QfDt1n_-_OWh7J8",
+}
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -197,39 +211,21 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 CSRF_COOKIE_NAME = 'csrftoken'
 SESSION_COOKIE_NAME = 'sessionid'
 
-# AWS S3 Configuration for production media storage
-if not DEBUG:
-    # Option 1: Use Cloudinary (free tier available)
-    CLOUDINARY = {
-        'cloud_name': os.getenv('CLOUDINARY_CLOUD_NAME'),
-        'api_key': os.getenv('CLOUDINARY_API_KEY'),
-        'api_secret': os.getenv('CLOUDINARY_API_SECRET'),
-    }
-    
-    # Use Cloudinary for media files
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-    MEDIA_URL = '/media/'
-    
-    # Option 2: Use AWS S3 (requires AWS account)
-    # AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-    # AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-    # AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
-    # AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME', 'us-east-1')
-    # AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-    # 
-    # # S3 static settings
-    # STATIC_LOCATION = 'static'
-    # STATIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
-    # STATICFILES_STORAGE = 'new_App.storage.StaticStorage'
-    # 
-    # # S3 media settings
-    # MEDIA_LOCATION = 'media'
-    # MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
-    # DEFAULT_FILE_STORAGE = 'new_App.storage.MediaStorage'
-    # 
-    # # S3 settings
-    # AWS_S3_OBJECT_PARAMETERS = {
-    #     'CacheControl': 'max-age=86400',
-    # }
-    # AWS_DEFAULT_ACL = 'public-read'
-    # AWS_QUERYSTRING_AUTH = False
+# AWS S3 Configuration for media storage
+# Set your AWS credentials here or use environment variables
+# AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
+# AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
+# AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME', '')
+# AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME', 'us-east-1')
+# AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+# AWS_DEFAULT_ACL = 'public-read'
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'CacheControl': 'max-age=86400',
+# }
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_QUERYSTRING_AUTH = False
+
+# Use AWS S3 for media files in production, local storage in development
+# Use Cloudinary as the default file storage
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+MEDIA_URL = '/media/'

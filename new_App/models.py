@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.core.files.storage import default_storage
 # Create your models here.
 class ContactMessage(models.Model):
     name = models.CharField(max_length=100)
@@ -34,7 +35,7 @@ class Programs(models.Model):
 class Leadership(models.Model):
     l_name = models.CharField(max_length=100)
     l_description = models.CharField(max_length=1000)
-    l_imagename = models.ImageField(upload_to=upload_to)
+    l_imagename = models.ImageField(upload_to='leadership/')
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
@@ -107,7 +108,7 @@ class Event(models.Model):
 
 class EventImage(models.Model):
     id = models.AutoField(primary_key=True)
-    image = models.ImageField(upload_to=upload_to)
+    image = models.ImageField(upload_to='events/')
     description = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
