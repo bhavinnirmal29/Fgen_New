@@ -11,3 +11,5 @@ django-cors-headers==4.4.0
 django-extensions==3.2.3
 dj-database-url
 gunicorn
+django-cloudinary-storage 
+cloudinary
