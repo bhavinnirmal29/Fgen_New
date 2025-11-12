@@ -56,9 +56,9 @@ INSTALLED_APPS = [
 # CLOUDINARY_API_SECRET = "yPNuK2ZZ4T4_QfDt1n_-_OWh7J8"
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': "ddkeblfid",
-    'API_KEY': "761662694724374",
-    'API_SECRET': "yPNuK2ZZ4T4_QfDt1n_-_OWh7J8",
+    'CLOUD_NAME': "deyxf6bvr",
+    'API_KEY': "558145116683513",
+    'API_SECRET': "ky5Iyhx34DHEcDxgjvvwmBbBgiI",
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
