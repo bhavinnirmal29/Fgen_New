@@ -10,7 +10,11 @@ from .models import Event
 class ContactForm(forms.ModelForm):
     class Meta:
         model = ContactMessage
-        fields = ['name', 'email', 'message']
+        fields = ['name', 'email', 'subject', 'other_subject', 'message']
+        widgets = {
+            'subject': forms.Select(attrs={'class': 'form-control', 'id': 'id_subject'}),
+            'other_subject': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Please specify...', 'id': 'id_other_subject'}),
+        }
         
 class RegistrationForm(forms.Form):
     name = forms.CharField(max_length=100)

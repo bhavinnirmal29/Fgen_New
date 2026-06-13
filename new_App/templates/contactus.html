@@ -7,18 +7,44 @@
     <div class="card px-1 py-4">
         <div class="card-body">
            <h2 class="card-title justify-content-center">Contact us to know more...!</h2>
-            {% comment %} <div class="d-flex flex-row"> <label class="radio mr-1"> <input type="radio" name="add" value="anz" checked> <span> <i class="fa fa-user"></i> Anz CMK </span> </label> <label class="radio"> <input type="radio" name="add" value="add"> <span> <i class="fa fa-plus-circle"></i> Add </span> </label> </div>
-            <h6 class="information mt-4">Please provide following information about Anz CMK</h6>  {% endcomment %}
             <form id="contact" action="{% url 'contact_us' %}" method="post">
                 {% csrf_token %}
             <div class="row">
                 <div class="col-sm-12 col-md-6">
                     <div class="form-group">
-                        <!-- <label for="name">Name</label> --> <input name="name" class="form-control" type="text" placeholder="Name"> </div>
+                        <input name="name" class="form-control" type="text" placeholder="Name">
+                    </div>
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <div class="form-group">
-                        <div class="input-group"> <input name="email" class="form-control" type="text" placeholder="Email ID"> </div>
+                        <div class="input-group">
+                            <input name="email" class="form-control" type="text" placeholder="Email ID">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="id_subject">Subject</label>
+                        <select name="subject" class="form-control" id="id_subject">
+                            <option value="">-- Select a subject --</option>
+                            <option value="administration">Administration</option>
+                            <option value="media_communications">Media &amp; Communications</option>
+                            <option value="technical_production">Technical &amp; Production</option>
+                            <option value="hospitality_logistics">Hospitality &amp; Logistics</option>
+                            <option value="ministry_spiritual_support">Ministry &amp; Spiritual Support</option>
+                            <option value="event_day_support">Event Day Support</option>
+                            <option value="dancers">Dancers</option>
+                            <option value="others">Others</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="other_subject_row" style="display:none;">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <input name="other_subject" id="id_other_subject" class="form-control" type="text" placeholder="Please specify...">
                     </div>
                 </div>
             </div>
@@ -34,4 +60,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('id_subject').addEventListener('change', function () {
+        var otherRow = document.getElementById('other_subject_row');
+        var otherInput = document.getElementById('id_other_subject');
+        if (this.value === 'others') {
+            otherRow.style.display = '';
+            otherInput.required = true;
+        } else {
+            otherRow.style.display = 'none';
+            otherInput.required = false;
+            otherInput.value = '';
+        }
+    });
+</script>
 {% endblock %}

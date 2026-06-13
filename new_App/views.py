@@ -65,7 +65,10 @@ def contact_us(request):
 
             # Send email to special users
             subject = f"New Contact Form Submission:"
-            message = f"Name: {contact_message.name}\nEmail: {contact_message.email}\nMessage: {contact_message.message}"
+            subject_display = contact_message.get_subject_display() if contact_message.subject else 'N/A'
+            if contact_message.subject == 'others' and contact_message.other_subject:
+                subject_display = f"Others - {contact_message.other_subject}"
+            message = f"Name: {contact_message.name}\nEmail: {contact_message.email}\nSubject: {subject_display}\nMessage: {contact_message.message}"
             print(message)
             from_email = settings.DEFAULT_FROM_EMAIL
             recipient_list = ['info@fgen.ca']  # Add email addresses of special users

@@ -6,8 +6,20 @@ from django.conf import settings
 from django.core.files.storage import default_storage
 # Create your models here.
 class ContactMessage(models.Model):
+    SUBJECT_CHOICES = [
+        ('administration', 'Administration'),
+        ('media_communications', 'Media & Communications'),
+        ('technical_production', 'Technical & Production'),
+        ('hospitality_logistics', 'Hospitality & Logistics'),
+        ('ministry_spiritual_support', 'Ministry & Spiritual Support'),
+        ('event_day_support', 'Event Day Support'),
+        ('dancers', 'Dancers'),
+        ('others', 'Others'),
+    ]
     name = models.CharField(max_length=100)
     email = models.EmailField()
+    subject = models.CharField(max_length=50, choices=SUBJECT_CHOICES, blank=True, default='')
+    other_subject = models.CharField(max_length=200, blank=True, default='')
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
