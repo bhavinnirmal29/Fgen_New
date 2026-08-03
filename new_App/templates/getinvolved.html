@@ -20,6 +20,20 @@
       </div>
   </div>
 
+  <!-- Executive Applications Section -->
+  <br><br>
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-lg-12">
+      <h2 class="text-center text-white">FGEN EXECUTIVE APPLICATIONS</h2>
+      <p class="text-center text-white">{{ exec_applications_text }}</p>
+      {% if exec_applications_form %}
+      <p class="text-center">
+        <a href="{{ exec_applications_form.form_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">{{ exec_applications_form.title }}</a>
+      </p>
+      {% endif %}
+    </div>
+  </div>
+
   <!-- Donate Section -->
     {% comment %} <div class="row text-white">
       <div class="col-md-12 col-sm-12 col-lg-12">

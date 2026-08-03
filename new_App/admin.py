@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ContactMessage, Programs, Leadership,NewsletterSubscriber,PDFDocument,UserPayment, Event, WebData, Testimonials, YouTubeVideo
+from .models import ContactMessage, Programs, Leadership,NewsletterSubscriber,PDFDocument,UserPayment, Event, WebData, Testimonials, YouTubeVideo, Executive, GoogleForm
 from .models import Event, EventImage
 # Register your models here.
 class EventImageInline(admin.TabularInline):
@@ -8,15 +8,32 @@ class EventImageInline(admin.TabularInline):
 
 class EventAdmin(admin.ModelAdmin):
     inlines = [EventImageInline]
-    
+
 admin.site.register(ContactMessage)
 admin.site.register(Programs)
 admin.site.register(Leadership)
 admin.site.register(UserPayment)
 admin.site.register(Event)
-admin.site.register(WebData)
 admin.site.register(Testimonials)
 admin.site.register(EventImage)
+
+@admin.register(WebData)
+class WebDataAdmin(admin.ModelAdmin):
+    list_display = ('page_name', 'title', 'description_text')
+    list_filter = ('page_name',)
+    search_fields = ('page_name', 'title', 'description_text')
+
+@admin.register(Executive)
+class ExecutiveAdmin(admin.ModelAdmin):
+    list_display = ('e_name', 'order', 'created_at')
+    list_editable = ('order',)
+    ordering = ('order', 'created_at')
+
+@admin.register(GoogleForm)
+class GoogleFormAdmin(admin.ModelAdmin):
+    list_display = ('key', 'title', 'form_url', 'is_active', 'updated_at')
+    list_editable = ('is_active',)
+
 @admin.register(PDFDocument)
 class PDFDocumentAdmin(admin.ModelAdmin):
     list_display = ('title', 'uploaded_at')

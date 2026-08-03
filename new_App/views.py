@@ -3,10 +3,13 @@ from django.utils import timezone
 from django.shortcuts import render,redirect
 from .forms import ContactForm
 from .forms import RegistrationForm, EventForm
-from .models import Programs, Leadership, Event, WebData, Testimonials, EventImage, YouTubeVideo
+from .models import Programs, Leadership, Event, WebData, Testimonials, EventImage, YouTubeVideo, Executive, GoogleForm
 from django.contrib import messages
 from django.conf import settings
 from django.core.mail import send_mail
+import logging
+
+logger = logging.getLogger(__name__)
 from django.contrib.auth.decorators import login_required
 from .forms import NewsletterSignupForm
 from .models import NewsletterSubscriber
@@ -18,6 +21,36 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def custom_page_not_found_view(request, exception):
     return render(request, "404.html", {}, status=404)
+
+def get_webdata(title, default_text=''):
+    """Fetch a WebData entry by title, falling back to a placeholder instead of
+    raising DoesNotExist so a missing admin entry doesn't crash the page."""
+    entry = WebData.objects.filter(title=title).first()
+    if entry:
+        return entry
+    return WebData(title=title, description_text=default_text)
+
+def get_google_form(key):
+    return GoogleForm.objects.filter(key=key, is_active=True).first()
+
+PROGRAMS_CARD1_BODY_DEFAULT = """<ul>
+<li>What are the parts of the brain?</li>
+<li>What are the functions of each part of the brain?</li>
+<li>What are common neurological disorders? Raising awareness on disorders like autism spectrum disorders, epilepsy, etc.</li>
+<li>Why is learning about the brain important?</li>
+<li>The brain and its importance in mental health.</li>
+<li>Fun interactive games: Q&amp;A, and activities where I engage students. E.g. Kahoot and student activities.</li>
+</ul>"""
+
+PROGRAMS_CARD2_BODY_DEFAULT = """<p><strong>Time:</strong> 30 - 45 minutes</p>
+<p><strong>Where:</strong> Classroom or gym (preferably anywhere that has a smartboard)</p>
+<p><strong>Target Audience:</strong> All elementary and junior high students.</p>
+<p><strong>What:</strong> I will be presenting a slideshow about the brain. There will be fun videos and interactive images. I will give students fun brain colouring sheets/fun brain facts sheets/goody bags to keep at the end of the presentation. I will also do fun brain games with the students to test their knowledge and there may be prizes. E.g. Kahoot, and calling students up for demonstrations!</p>"""
+
+DEFAULT_EXEC_APPLICATIONS_TEXT = (
+    "FGEN executive applications are now closed. Please apply next year when "
+    "applications open in June 2027."
+)
 
 # Home View
 def home(request):
@@ -33,15 +66,17 @@ def home(request):
 # About Us View
 def about_us(request):
     leadership = Leadership.objects.all()
-    visiondata=WebData.objects.get(title = 'vision')
-    missiondata=WebData.objects.get(title = 'mission')
-    aboutdata = WebData.objects.get(title='about_text')
-    aboutheader = WebData.objects.get(title = 'header')
-    ss = WebData.objects.get(title = 'successstory')
-    cs = WebData.objects.get(title = 'casestudy')
-    sc = WebData.objects.get(title = 'satisfied_clients')
+    executives = Executive.objects.all()
+    visiondata = get_webdata('vision')
+    missiondata = get_webdata('mission')
+    aboutdata = get_webdata('about_text')
+    aboutheader = get_webdata('header')
+    ss = get_webdata('successstory')
+    cs = get_webdata('casestudy')
+    sc = get_webdata('satisfied_clients')
     context = {
         'leadership': leadership,
+        'executives': executives,
         'vision': visiondata,
         'mission':missiondata,
         'about':aboutdata,
@@ -69,10 +104,14 @@ def contact_us(request):
             if contact_message.subject == 'others' and contact_message.other_subject:
                 subject_display = f"Others - {contact_message.other_subject}"
             message = f"Name: {contact_message.name}\nEmail: {contact_message.email}\nSubject: {subject_display}\nMessage: {contact_message.message}"
-            print(message)
             from_email = settings.DEFAULT_FROM_EMAIL
             recipient_list = ['info@fgen.ca']  # Add email addresses of special users
-            send_mail("A New Inquiry", message, from_email, recipient_list)
+            try:
+                send_mail("A New Inquiry", message, from_email, recipient_list, fail_silently=False)
+            except Exception:
+                # The message is already saved above; don't let a transient email
+                # outage turn into a 500 error for the visitor.
+                logger.exception("Failed to send contact form notification email")
             messages.success(request, 'Your message has been sent successfully!')
             return redirect('contact_success')
     else:
@@ -86,7 +125,17 @@ def contact_success(request):
 # Programs View
 def programs(request):
     programs = Programs.objects.all()
-    return render(request, 'programs.html', {'active_page': 'programs', 'programs':programs})
+    context = {
+        'active_page': 'programs',
+        'programs': programs,
+        'page_title': get_webdata('programs_page_title', 'FGEN Neuroscience Presentations').description_text,
+        'card1_title': get_webdata('programs_card1_title', 'What Will I Be Teaching?').description_text,
+        'card1_body': get_webdata('programs_card1_body', PROGRAMS_CARD1_BODY_DEFAULT).description_text,
+        'card2_title': get_webdata('programs_card2_title', 'What Will Neuroscience Literacy Sessions Look Like?').description_text,
+        'card2_body': get_webdata('programs_card2_body', PROGRAMS_CARD2_BODY_DEFAULT).description_text,
+        'booking_form': get_google_form('programs_booking'),
+    }
+    return render(request, 'programs.html', context)
 
 # Get Involved View
 # def get_involved(request):
@@ -193,7 +242,9 @@ def getinvolved_page(request):
     context = {
         'benefit_data':benefit_data,
         'impact_data':impact_data,
-        'active_page': 'getinvolved'
+        'active_page': 'getinvolved',
+        'exec_applications_text': get_webdata('executive_applications_description', DEFAULT_EXEC_APPLICATIONS_TEXT).description_text,
+        'exec_applications_form': get_google_form('executive_applications'),
     }
     if request.method == 'POST':
         donation_amount = int(request.POST.get('donation_amount')) * 100

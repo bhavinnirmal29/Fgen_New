@@ -1,15 +1,13 @@
 {% extends 'base.html' %}
 {% load static%}
-{% block title %}Programs {% endblock %}
+{% block title %}{{ page_title }}{% endblock %}
 
 {% block content %}
     <div class="container-fluid" style="margin-top:60px;">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="jumbotron bg-white text-center">
-                    <h3>Neuroscience Literacy Sessions</h3>
-                    <h4>Welcome to NeuroLearners</h4>
-                    <h5>FGEN - NeuroLessons</h5>
+                    <h3>{{ page_title }}</h3>
                 </div>
             </div>
         </div>
@@ -18,33 +16,41 @@
             <div class="col-md-6 col-sm-12 col-lg-6 mb-4">
                 <div class="card program-card h-100">
                     <div class="card-header program-card-style">
-                        <h4 class="card-title">What Will I Be Teaching?</h4>
+                        <h4 class="card-title">{{ card1_title }}</h4>
                     </div>
                     <div class="card-body text-justify">
-                        <ul>
-                            <li>What are the parts of the brain?</li>
-                            <li>What are the functions of each part of the brain?</li>
-                            <li>What are common neurological disorders? Raising awareness on disorders like autism spectrum disorders, epilepsy, etc.</li>
-                            <li>Why is learning about the brain important?</li>
-                            <li>The brain and its importance in mental health.</li>
-                            <li>Fun interactive games: Q&A, and activities where I engage students. E.g. Kahoot and student activities.</li>
-                        </ul>
+                        {{ card1_body|safe }}
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col-sm-12 col-lg-6 mb-4">
                 <div class="card program-card h-100">
                     <div class="card-header program-card-style">
-                        <h4 class="card-title">What Will Neuroscience Literacy Sessions Look Like?</h4>
+                        <h4 class="card-title">{{ card2_title }}</h4>
                     </div>
                     <div class="card-body text-justify">
-                        <p><strong>Time:</strong> 30 - 45 minutes</p>
-                        <p><strong>Where:</strong> Classroom or gym (preferably anywhere that has a smartboard)</p>
-                        <p><strong>Target Audience:</strong> All elementary and junior high students.</p>
-                        <p><strong>What:</strong> I will be presenting a slideshow about the brain. There will be fun videos and interactive images. I will give students fun brain colouring sheets/fun brain facts sheets/goody bags to keep at the end of the presentation. I will also do fun brain games with the students to test their knowledge and there may be prizes. E.g. Kahoot, and calling students up for demonstrations!</p>
+                        {{ card2_body|safe }}
                     </div>
                 </div>
             </div>
         </div>
+
+        {% if booking_form %}
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 mb-4">
+                <div class="card program-card h-100">
+                    <div class="card-header program-card-style">
+                        <h4 class="card-title">{{ booking_form.title }}</h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <a href="{{ booking_form.form_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg mb-3">Book a School Presentation</a>
+                        <div class="embed-responsive embed-responsive-4by3">
+                            <iframe class="embed-responsive-item" src="{{ booking_form.form_url }}" style="width:100%; min-height:600px; border:0;" title="{{ booking_form.title }}">Loading form...</iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 {% endblock %}

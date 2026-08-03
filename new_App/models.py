@@ -54,6 +54,22 @@ class Leadership(models.Model):
         return f"{self.l_name} - ({self.l_description})"
     
 
+class Executive(models.Model):
+    e_name = models.CharField(max_length=100)
+    e_description = models.CharField(max_length=1000)
+    e_imagename = models.ImageField(upload_to='executives/')
+    order = models.PositiveIntegerField(default=0, help_text="Order in which this profile appears")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['order', 'created_at']
+        verbose_name = 'Executive'
+        verbose_name_plural = 'Executives'
+
+    def __str__(self):
+        return f"{self.e_name} - ({self.e_description})"
+
+
 class Testimonials(models.Model):
     t_name = models.CharField(max_length=100)
     t_description = models.CharField(max_length=1000)
@@ -126,6 +142,25 @@ class EventImage(models.Model):
     def __str__(self):
         return f"Image for {self.description}"
   
+class GoogleForm(models.Model):
+    KEY_CHOICES = [
+        ('programs_booking', 'Programs Page - School Presentation Booking Form'),
+        ('executive_applications', 'Get Involved Page - Executive Applications Form'),
+    ]
+    key = models.CharField(max_length=50, choices=KEY_CHOICES, unique=True)
+    title = models.CharField(max_length=200)
+    form_url = models.URLField(max_length=500)
+    is_active = models.BooleanField(default=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'Google Form'
+        verbose_name_plural = 'Google Forms'
+
+    def __str__(self):
+        return self.title
+
+
 class WebData(models.Model):
     page_name = models.CharField(max_length=255)
     title = models.CharField(max_length=200)

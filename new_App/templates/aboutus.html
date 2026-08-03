@@ -106,6 +106,28 @@
     </div>
 </div>
 
+<div class="container mt-2">
+    <div class="jumbotron jumbotron-custom text-center">
+        <h2 class="display-6">Executives</h2>
+    </div>
+    <div class="row">
+        <div class="row justify-content-center">
+            {% for e in executives %}
+            <div class="col-md-4 col-sm-12 col-lg-4">
+                <div class="card card-custom program-card shadow-lg">
+                    <img src="{{e.e_imagename.url|trim_path}}" height=350 width=250 class="card-img-top" alt="Card Image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{e.e_name}}</h5>
+                        <p class="card-text text-justify">{{e.e_description}}</p>
+                    </div>
+                </div>
+                &nbsp;
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
 <div class="container impact-section">
     <div class="row">
         <div class="col-12 text-center mb-4">
@@ -116,19 +138,19 @@
     <div class="row">
         <div class="col-md-4">
             <div class="impact-item fade-in">
-                <div class="impact-number">{{ss1.description_text}}+</div>
+                <div class="impact-number">{{ss1.description_text}}</div>
                 <div class="impact-description">Success Stories</div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="impact-item fade-in" style="animation-delay: 0.3s;">
-                <div class="impact-number">{{cs1.description_text}}+</div>
+                <div class="impact-number">{{cs1.description_text}}</div>
                 <div class="impact-description">Case Studies</div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="impact-item fade-in" style="animation-delay: 0.6s;">
-                <div class="impact-number">{{sc1.description_text}}+</div>
+                <div class="impact-number">{{sc1.description_text}}</div>
                 <div class="impact-description">Satisfied Clients</div>
             </div>
         </div>

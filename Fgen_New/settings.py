@@ -12,19 +12,33 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Loads variables from a local .env file (gitignored) for development.
+# In production (Heroku), config vars are already in the real environment,
+# so this is a harmless no-op there.
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-okes%*4du!r7dwy5_5tq$vpgjhlm9gs*ptdo84d_gw^l-lfph$"
+# Falls back to a dev-only key so `manage.py runserver` still works out of the
+# box locally; production (Heroku) must set DJANGO_SECRET_KEY.
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET_KEY",
+    "django-insecure-okes%*4du!r7dwy5_5tq$vpgjhlm9gs*ptdo84d_gw^l-lfph$",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'True'
+# Previously `DEBUG = 'True'` (a non-empty string), which is always truthy in
+# Python regardless of the value assigned - DEBUG was effectively stuck on in
+# every environment. Parse it properly from the DJANGO_DEBUG env var instead.
+DEBUG = os.environ.get("DJANGO_DEBUG", "False").lower() in ("true", "1", "yes")
 
 ALLOWED_HOSTS = ["fgen-71037e60626c.herokuapp.com","127.0.0.1","www.fgen.ca","fgen.ca"]#remove the * from here.
 
@@ -56,9 +70,9 @@ INSTALLED_APPS = [
 # CLOUDINARY_API_SECRET = "yPNuK2ZZ4T4_QfDt1n_-_OWh7J8"
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': "deyxf6bvr",
-    'API_KEY': "558145116683513",
-    'API_SECRET': "ky5Iyhx34DHEcDxgjvvwmBbBgiI",
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'deyxf6bvr'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '558145116683513'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', 'ky5Iyhx34DHEcDxgjvvwmBbBgiI'),
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -100,10 +114,12 @@ WSGI_APPLICATION = "Fgen_New.wsgi.application"
 import dj_database_url
 
 
-# Use PostgreSQL on Heroku
+# Use PostgreSQL on Heroku. DATABASE_URL is injected automatically by Heroku
+# Postgres; locally it falls back to a sqlite file so `manage.py runserver`
+# works without any extra setup.
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgres://uc8bdr2fg33rn6:p376745114295f79b372a7a631410db0c9e81814862e9b59f654a0fd9695a2152@c9mq4861d16jlm.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/dfe673gjjcluri',
+        default=f"sqlite:///{BASE_DIR}/db.sqlite3",
         conn_max_age=600,
         conn_health_checks=True,
     )
@@ -180,21 +196,21 @@ LOGIN_URL = '/accounts/login/'
 ACCOUNT_SIGNUP_REDIRECT_URL = "/accounts/login/"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.office365.com'
-EMAIL_PORT = 587
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.office365.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587'))
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'info@fgen.ca'
-EMAIL_HOST_PASSWORD = 'bwpcjrnwcfwswgbz'
-DEFAULT_FROM_EMAIL = 'info@fgen.ca'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'info@fgen.ca')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'info@fgen.ca')
 
 
 ## Stripe
-STRIPE_PUBLIC_KEY_TEST ="pk_test_51NNQNSFQ7fQ9eiOGecD4H58qV13FiZZlelEmNnmxoqWxXpFuASZLQ710geQOzc39pdrrMLJ4NRlb0nnToTPedVxF006dpnwdKT" #os.getenv('STRIPE_PUBLIC_KEY_TEST')
-STRIPE_SECRET_KEY_TEST ="sk_test_51NNQNSFQ7fQ9eiOGNU27BidquzSvmBAC4FztWt8jroHqHQ2QyTwCx7BBpjksldu7ZBnxRazcOWCVVcOZExG0Ajvt00rmvFR3A5" #os.getenv('STRIPE_SECRET_KEY_TEST')
-STRIPE_WEBHOOK_SECRET_TEST ="whsec_A1OrxvrPcbuddU81wu1SCzP39kibFwze" #os.getenv('STRIPE_WEBHOOK_SECRET_TEST')
-PRODUCT_PRICE = "price_1PhLSdFQ7fQ9eiOG4z1Rngtx"#os.getenv('PRODUCT_PRICE')
-PRODUCT_ID='prod_QYSNWnTHKR94q7'
-REDIRECT_DOMAIN = 'https://www.fgen.ca'
+STRIPE_PUBLIC_KEY_TEST = os.environ.get('STRIPE_PUBLIC_KEY_TEST', '')
+STRIPE_SECRET_KEY_TEST = os.environ.get('STRIPE_SECRET_KEY_TEST', '')
+STRIPE_WEBHOOK_SECRET_TEST = os.environ.get('STRIPE_WEBHOOK_SECRET_TEST', '')
+PRODUCT_PRICE = os.environ.get('PRODUCT_PRICE', 'price_1PhLSdFQ7fQ9eiOG4z1Rngtx')
+PRODUCT_ID = os.environ.get('PRODUCT_ID', 'prod_QYSNWnTHKR94q7')
+REDIRECT_DOMAIN = os.environ.get('REDIRECT_DOMAIN', 'https://www.fgen.ca')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
