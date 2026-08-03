@@ -7,14 +7,16 @@ from django.core.files.storage import default_storage
 # Create your models here.
 class ContactMessage(models.Model):
     SUBJECT_CHOICES = [
-        ('administration', 'Administration'),
-        ('media_communications', 'Media & Communications'),
-        ('technical_production', 'Technical & Production'),
-        ('hospitality_logistics', 'Hospitality & Logistics'),
-        ('ministry_spiritual_support', 'Ministry & Spiritual Support'),
-        ('event_day_support', 'Event Day Support'),
-        ('dancers', 'Dancers'),
-        ('others', 'Others'),
+        ('school_partnership', 'School Partnership / Presentation'),
+        ('volunteer', 'Volunteer / Get Involved'),
+        ('executive_team', 'FGEN Executive Team'),
+        ('student_questions', 'Student Questions'),
+        ('parent_guardian', 'Parent / Guardian Inquiry'),
+        ('general_inquiry', 'General Inquiry'),
+        ('collaboration_partnership', 'Collaboration / Partnership'),
+        ('media_press', 'Media / Press Inquiry'),
+        ('feedback_suggestions', 'Feedback / Suggestions'),
+        ('others', 'Other'),
     ]
     name = models.CharField(max_length=100)
     email = models.EmailField()

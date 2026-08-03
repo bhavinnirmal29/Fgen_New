@@ -33,19 +33,30 @@ def get_webdata(title, default_text=''):
 def get_google_form(key):
     return GoogleForm.objects.filter(key=key, is_active=True).first()
 
+PROGRAMS_INTRO_DEFAULT = (
+    "FGEN’s Neuroscience Presentations introduce students to the fascinating "
+    "world of the human brain through accessible, engaging, and age-appropriate activities."
+)
+
 PROGRAMS_CARD1_BODY_DEFAULT = """<ul>
-<li>What are the parts of the brain?</li>
-<li>What are the functions of each part of the brain?</li>
-<li>What are common neurological disorders? Raising awareness on disorders like autism spectrum disorders, epilepsy, etc.</li>
-<li>Why is learning about the brain important?</li>
-<li>The brain and its importance in mental health.</li>
-<li>Fun interactive games: Q&amp;A, and activities where I engage students. E.g. Kahoot and student activities.</li>
+<li><strong>History of neuroscience:</strong> We will explore theories previous scientists have proposed about the brain, and how neuroscience has progressed over the years to what it is today.</li>
+<li><strong>The Parts of the Brain:</strong> We will explore the major regions of the brain and learn what makes each one unique.</li>
+<li><strong>How Does the Brain Work?</strong> We will discover the functions of different brain regions and how they work together to control our thoughts, emotions, movements, senses, and behaviours.</li>
+<li><strong>Why Does Neuroscience Matter?</strong> We will explore why learning about the brain is important and how neuroscience connects to our everyday lives.</li>
+<li><strong>The Brain &amp; Mental Health:</strong> We will discuss the connection between the brain, mental health, emotions, and overall well-being.</li>
+<li><strong>Interactive Learning:</strong> We will engage students through fun activities, demonstrations, Q&amp;As, games, and challenges designed to make neuroscience exciting and memorable. Activities may include Kahoot quizzes, student demonstrations, brain-related challenges, and more.</li>
 </ul>"""
 
-PROGRAMS_CARD2_BODY_DEFAULT = """<p><strong>Time:</strong> 30 - 45 minutes</p>
-<p><strong>Where:</strong> Classroom or gym (preferably anywhere that has a smartboard)</p>
-<p><strong>Target Audience:</strong> All elementary and junior high students.</p>
-<p><strong>What:</strong> I will be presenting a slideshow about the brain. There will be fun videos and interactive images. I will give students fun brain colouring sheets/fun brain facts sheets/goody bags to keep at the end of the presentation. I will also do fun brain games with the students to test their knowledge and there may be prizes. E.g. Kahoot, and calling students up for demonstrations!</p>"""
+PROGRAMS_CARD2_BODY_DEFAULT = """<p><strong>Time:</strong> 30–45 minutes</p>
+<p><strong>Location:</strong> Classroom, gymnasium, or another suitable school space. A room with access to a Smartboard or projector is preferred.</p>
+<p><strong>Target Audience:</strong> Elementary and junior high students</p>
+<p><strong>Session Format:</strong> We will deliver an engaging, age-appropriate presentation introducing students to the human brain and neuroscience. Our sessions will incorporate colourful visuals, interactive images, videos, demonstrations, and activities to keep students actively involved.</p>
+<p>Students may also receive brain-themed colouring sheets, neuroscience fact sheets, activity materials, or small FGEN goody bags to take home. We may conclude sessions with interactive brain games, Q&amp;A challenges, or friendly competitions such as Kahoot, with opportunities for students to participate in demonstrations and win small prizes.</p>"""
+
+PROGRAMS_OUTRO_DEFAULT = (
+    "Our goal is to make neuroscience accessible, exciting, and meaningful while "
+    "encouraging students to stay curious about the brain and its role in our everyday lives."
+)
 
 DEFAULT_EXEC_APPLICATIONS_TEXT = (
     "FGEN executive applications are now closed. Please apply next year when "
@@ -129,10 +140,12 @@ def programs(request):
         'active_page': 'programs',
         'programs': programs,
         'page_title': get_webdata('programs_page_title', 'FGEN Neuroscience Presentations').description_text,
-        'card1_title': get_webdata('programs_card1_title', 'What Will I Be Teaching?').description_text,
+        'page_intro': get_webdata('programs_page_intro', PROGRAMS_INTRO_DEFAULT).description_text,
+        'card1_title': get_webdata('programs_card1_title', 'What Will We Be Teaching?').description_text,
         'card1_body': get_webdata('programs_card1_body', PROGRAMS_CARD1_BODY_DEFAULT).description_text,
-        'card2_title': get_webdata('programs_card2_title', 'What Will Neuroscience Literacy Sessions Look Like?').description_text,
+        'card2_title': get_webdata('programs_card2_title', 'What Will FGEN Neuroscience Presentations Look Like?').description_text,
         'card2_body': get_webdata('programs_card2_body', PROGRAMS_CARD2_BODY_DEFAULT).description_text,
+        'page_outro': get_webdata('programs_page_outro', PROGRAMS_OUTRO_DEFAULT).description_text,
         'booking_form': get_google_form('programs_booking'),
     }
     return render(request, 'programs.html', context)
