@@ -1,0 +1,32 @@
+{
+	email {$ACME_EMAIL}
+}
+
+# Both names get their own certificate; neither redirects to the other.
+{$DOMAIN}, www.{$DOMAIN} {
+	encode zstd gzip
+
+	# Uploads (leadership/executive/event images, newsletter PDFs) straight off
+	# the media volume; Django never touches these requests.
+	handle_path /media/* {
+		root * /srv/media
+		header Cache-Control "public, max-age=86400"
+		file_server
+	}
+
+	handle {
+		reverse_proxy web:8000
+	}
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		-Server
+	}
+
+	log {
+		output stdout
+		format console
+	}
+}

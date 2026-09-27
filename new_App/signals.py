@@ -12,8 +12,8 @@ def send_pdf_notification(sender, instance, created, **kwargs):
         # Construct email content
         subject = 'New Newsletter Available'
         
-        # Access the Cloudinary URL using `.url`
-        file_url = instance.file.url
+        # Media is served from this site, so .url is relative; make it absolute.
+        file_url = settings.SITE_URL + instance.file.url
         message = f'A new Newsletter titled "{instance.title}" has been uploaded. You can view it here: {file_url}'
         
         from_email = settings.DEFAULT_FROM_EMAIL

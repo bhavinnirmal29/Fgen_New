@@ -1,7 +1,8 @@
-# Virtual Environment
+# Virtual environments
 venv/
 env/
 ENV/
+.venv/
 
 # Python
 __pycache__/
@@ -14,24 +15,33 @@ __pycache__/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-
-# Media files
+staticfiles/
 media/
 
-# Environment variables
+# Environment / secrets -- never commit these
 .env
 .env.local
 .env.production
+infra/.env
+*.pem
+*.key
+*.crt
+email.txt
+stripe.txt
 
-# IDE
+# Data dumps and exports (contain personal data)
+*.sql
+*.dump
+local_backup.json
+new_App_*.csv
+check_heroku_db.py
+test_heroku_db.py
+Deploy_Steps.txt
+
+# IDE / OS
 .vscode/
 .idea/
 *.swp
 *.swo
-
-# OS
 .DS_Store
 Thumbs.db
-
-# Heroku
-staticfiles/

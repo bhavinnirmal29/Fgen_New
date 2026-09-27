@@ -15,6 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.db import connection
+from django.http import JsonResponse
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 from new_App import views
@@ -24,7 +26,16 @@ from django.conf.urls.static import static
 
 handler404 = "new_App.views.custom_page_not_found_view"
 
+
+def healthz(request):
+    """Liveness + DB check for the container healthcheck and the deploy script."""
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT 1")
+    return JsonResponse({"status": "ok"})
+
+
 urlpatterns = [
+    path("healthz/", healthz, name="healthz"),
     path("admin/", admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', views.home, name='home'),
