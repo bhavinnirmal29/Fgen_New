@@ -1,19 +1,25 @@
 # syntax=docker/dockerfile:1
 
-# ---------- builder ----------
+# ---------- builder: deps + collected static ----------
 FROM python:3.12-slim AS builder
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1
 
-RUN apt-get update && apt-get install -y --no-install-recommends build-essential \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY requirements.txt .
+COPY requirements.txt /tmp/requirements.txt
 RUN python -m venv /opt/venv \
     && /opt/venv/bin/pip install --upgrade pip \
-    && /opt/venv/bin/pip install -r requirements.txt
+    && /opt/venv/bin/pip install -r /tmp/requirements.txt
+
+COPY . /src
+WORKDIR /src
+# Collect (hash + compress) static files here, then drop the source copies so
+# the runtime image only carries staticfiles/ once.
+RUN DJANGO_SECRET_KEY=build-only /opt/venv/bin/python manage.py collectstatic --noinput \
+    && find /src -path /src/staticfiles -prune -o -type d -name static -prune -exec rm -rf {} + \
+    && mkdir -p /src/media \
+    && chmod +x /src/entrypoint.sh
 
 # ---------- runtime ----------
 FROM python:3.12-slim AS runtime
@@ -29,16 +35,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl \
     && useradd --create-home --uid 10001 appuser
 
 COPY --from=builder /opt/venv /opt/venv
+COPY --from=builder --chown=appuser:appuser /src /app
 
 WORKDIR /app
-COPY --chown=appuser:appuser . /app
-
-# Static files are baked into the image; whitenoise serves them.
-RUN DJANGO_SECRET_KEY=build-only python manage.py collectstatic --noinput \
-    && mkdir -p /app/media \
-    && chown -R appuser:appuser /app/staticfiles /app/media \
-    && chmod +x /app/entrypoint.sh
-
 USER appuser
 EXPOSE 8000
 
